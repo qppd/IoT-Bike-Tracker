@@ -1,7 +1,5 @@
 # Bike Tracker
 
-# Bike Tracker
-
 An advanced, solar-powered GPS bike tracker designed for real-world use. This project features live location tracking, GSM communication, and robust hardware for outdoor environments. Developed by [qppd](https://github.com/qppd).
 
 ## Features
