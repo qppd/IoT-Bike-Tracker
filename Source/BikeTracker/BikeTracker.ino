@@ -6,7 +6,7 @@
 
 
 // ESP32: Define pins for hardware serial ports
-// GPS: TX=17, RX=16; GSM: TX=26, RX=27 (adjust if needed)
+// GPS: TX=17, RX=16; GSM: TX=26, RX=27
 HardwareSerial SerialGPS(1);
 HardwareSerial SerialGSM(2);
 Neo6mGPS gps(SerialGPS);
@@ -20,8 +20,8 @@ void setup() {
 		gps.begin(9600);
 		gsm.begin(9600);
 	Serial.println("BikeTracker test start");
-	// Optionally send a test SMS (uncomment to use)
-	// gsm.sendSMS("+1234567890", "Test message from BikeTracker");
+	
+	// gsm.sendSMS("+1234567890", "Test message");
 }
 
 void loop() {
