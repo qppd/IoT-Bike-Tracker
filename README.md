@@ -39,11 +39,16 @@ cd IoT-Bike-Tracker/Source/BikeTracker
 
 ### Hardware Assembly
 
+
 1. Solder the 18650 batteries to the charging module.
 2. Connect the solar panel to the charging module input.
 3. Use boost converters to supply 5V to ESP32, GPS, and GSM modules.
-4. Connect Neo6m GPS and SIM800L to ESP32 as per the wiring diagram (to be provided).
+4. Connect Neo6m GPS and SIM800L to ESP32 as per the wiring diagram (see below).
 5. Assemble all components into the 3D-printed case and clamp securely to your bike.
+
+#### Wiring Diagram
+
+![Wiring Diagram](https://github.com/qppd/IoT-Bike-Tracker/blob/main/Diagrams/Wiring.png)
 
 ### Software Upload
 
