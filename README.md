@@ -15,8 +15,8 @@ An advanced, solar-powered GPS bike tracker designed for real-world use. This pr
 
 - 2x Mini Solar Panel
 - 2x 18650 Lithium Batteries
-- 1x Charging Module (for 18650 cells)
-- 2x Boost Converters
+- 1x Charging Module 2S BMS (for 18650 cells)
+- 2x Buck Converters
 - 1x NodeMCU v3 1.0 Development Board
 - 1x Neo6m GPS Module
 - 1x SIM800L GSM Module
@@ -40,9 +40,9 @@ cd IoT-Bike-Tracker/Source/BikeTracker
 ### Hardware Assembly
 
 
-1. Solder the 18650 batteries to the charging module.
-2. Connect the solar panel to the charging module input.
-3. Use boost converters to supply 3.3V to NodeMCU, GPS, and GSM modules.
+1. Solder the 18650 batteries to the 2S BMS module.
+2. Connect the solar panel to boost converter module input.
+3. Use boost converters to supply 8.4v to 2S BMS.
 4. Connect Neo6m GPS and SIM800L to NodeMCU as per the wiring diagram (see below).
 5. Assemble all components into the 3D-printed case and clamp securely to your bike.
 
