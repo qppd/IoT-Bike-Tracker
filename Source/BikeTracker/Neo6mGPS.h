@@ -5,15 +5,16 @@
 #define NEO6MGPS_H
 
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 
 class Neo6mGPS {
 public:
-    Neo6mGPS(HardwareSerial &serial);
+    Neo6mGPS(SoftwareSerial &serial);
     void begin(long baudrate = 9600);
     bool available();
     String read();
 private:
-    HardwareSerial &gpsSerial;
+    SoftwareSerial &gpsSerial;
 };
 
 #endif // NEO6MGPS_H

@@ -9,7 +9,7 @@ An advanced, solar-powered GPS bike tracker designed for real-world use. This pr
 - Solar charging for extended battery life
 - Dual 18650 lithium battery support
 - 3D-printed, water-resistant (not waterproof) case and clamp for bike mounting
-- ESP32-based
+- NodeMCU v3 1.0-based
 
 ## Hardware Components
 
@@ -17,7 +17,7 @@ An advanced, solar-powered GPS bike tracker designed for real-world use. This pr
 - 2x 18650 Lithium Batteries
 - 1x Charging Module (for 18650 cells)
 - 2x Boost Converters
-- 1x ESP32 Development Board
+- 1x NodeMCU v3 1.0 Development Board
 - 1x Neo6m GPS Module
 - 1x SIM800L GSM Module
 - 1x 3D-Printed Water-Resistant Case & Clamp (for bike mounting)
@@ -27,7 +27,7 @@ An advanced, solar-powered GPS bike tracker designed for real-world use. This pr
 ### Prerequisites
 
 - Arduino IDE
-- ESP32 board support installed
+- NodeMCU v3 1.0 board support installed
 - Required libraries for GPS and GSM modules
 
 ### Cloning the Repository
@@ -42,8 +42,8 @@ cd IoT-Bike-Tracker/Source/BikeTracker
 
 1. Solder the 18650 batteries to the charging module.
 2. Connect the solar panel to the charging module input.
-3. Use boost converters to supply 5V to ESP32, GPS, and GSM modules.
-4. Connect Neo6m GPS and SIM800L to ESP32 as per the wiring diagram (see below).
+3. Use boost converters to supply 3.3V to NodeMCU, GPS, and GSM modules.
+4. Connect Neo6m GPS and SIM800L to NodeMCU as per the wiring diagram (see below).
 5. Assemble all components into the 3D-printed case and clamp securely to your bike.
 
 #### Wiring Diagram
@@ -53,14 +53,14 @@ cd IoT-Bike-Tracker/Source/BikeTracker
 ### Software Upload
 
 1. Open `BikeTracker.ino` in Arduino IDE.
-2. Select the correct ESP32 board and port.
+2. Select the correct NodeMCU v3 1.0 board and port.
 3. Install required libraries (see below).
-4. Upload the code to your ESP32.
+4. Upload the code to your NodeMCU.
 
 ### Required Libraries
 
 - TinyGPS++
-- HardwareSerial
+- SoftwareSerial
 - Any other dependencies as specified in the code
 
 ## Usage

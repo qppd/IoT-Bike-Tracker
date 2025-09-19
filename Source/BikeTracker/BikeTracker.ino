@@ -1,22 +1,23 @@
 
 // BikeTracker.ino
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 #include "Neo6mGPS.h"
 #include "Sim800L.h"
 
 
-// ESP32: Define pins for hardware serial ports
-// GPS: TX=17, RX=16; GSM: TX=26, RX=27
-HardwareSerial SerialGPS(1);
-HardwareSerial SerialGSM(2);
+// NodeMCU v3 1.0: Define pins for software serial ports
+// GPS: RX=D2, TX=D3; GSM: RX=D5, TX=D6
+SoftwareSerial SerialGPS(D2, D3); // RX, TX
+SoftwareSerial SerialGSM(D5, D6); // RX, TX
 Neo6mGPS gps(SerialGPS);
 Sim800L gsm(SerialGSM);
 
 void setup() {
 	Serial.begin(9600); // Debug serial
 		// Begin Serial ports with pin assignments
-		SerialGPS.begin(9600, SERIAL_8N1, 16, 17); // RX, TX
-		SerialGSM.begin(9600, SERIAL_8N1, 27, 26); // RX, TX
+		SerialGPS.begin(9600);
+		SerialGSM.begin(9600);
 		gps.begin(9600);
 		gsm.begin(9600);
 	Serial.println("BikeTracker test start");

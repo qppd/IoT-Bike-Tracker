@@ -3,7 +3,7 @@
 
 #include "Neo6mGPS.h"
 
-Neo6mGPS::Neo6mGPS(HardwareSerial &serial) : gpsSerial(serial) {}
+Neo6mGPS::Neo6mGPS(SoftwareSerial &serial) : gpsSerial(serial) {}
 
 void Neo6mGPS::begin(long baudrate) {
     gpsSerial.begin(baudrate);

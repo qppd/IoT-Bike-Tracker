@@ -3,7 +3,7 @@
 
 #include "Sim800L.h"
 
-Sim800L::Sim800L(HardwareSerial &serial) : gsmSerial(serial) {}
+Sim800L::Sim800L(SoftwareSerial &serial) : gsmSerial(serial) {}
 
 void Sim800L::begin(long baudrate) {
     gsmSerial.begin(baudrate);
