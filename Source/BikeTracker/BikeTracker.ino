@@ -90,6 +90,15 @@ void setup() {
             Serial.println("ATGPRS    - Test GPRS commands");
             Serial.println("ATHTTP    - Test HTTP commands");
             Serial.println("");
+            Serial.println("=== GPS MODULE TESTING ===");
+            Serial.println("GPSTEST   - Run all GPS tests");
+            Serial.println("GPSBASIC  - Test basic GPS communication");
+            Serial.println("GPSNMEA   - Test NMEA sentence parsing");
+            Serial.println("GPSLOCATION - Test GPS fix and location");
+            Serial.println("GPSPERF   - Test GPS performance");
+            Serial.println("GPSSTATUS - Show current GPS status");
+            Serial.println("GPSRAW    - Display raw NMEA data");
+            Serial.println("");
             Serial.println("HELP      - Show this menu");
             Serial.println("NOTE: Power management fully implemented");
             Serial.println("=============================\n");
@@ -277,6 +286,34 @@ void processSerialCommands() {
             Serial.println("Running HTTP AT command tests...");
             gsm.runHTTPTests();
             
+        } else if (serialCommand == "GPSTEST") {
+            Serial.println("Running comprehensive GPS tests...");
+            gps.runAllGPSTests();
+            
+        } else if (serialCommand == "GPSBASIC") {
+            Serial.println("Running basic GPS tests...");
+            gps.runBasicGPSTests();
+            
+        } else if (serialCommand == "GPSNMEA") {
+            Serial.println("Running NMEA sentence tests...");
+            gps.runNMEATests();
+            
+        } else if (serialCommand == "GPSLOCATION") {
+            Serial.println("Running GPS location tests...");
+            gps.runLocationTests();
+            
+        } else if (serialCommand == "GPSPERF") {
+            Serial.println("Running GPS performance tests...");
+            gps.runPerformanceTests();
+            
+        } else if (serialCommand == "GPSSTATUS") {
+            Serial.println("Displaying current GPS status...");
+            gps.printGPSStatus();
+            
+        } else if (serialCommand == "GPSRAW") {
+            Serial.println("Displaying raw NMEA data for 10 seconds...");
+            gps.displayRawNMEA(10);
+            
         } else if (serialCommand == "HELP") {
             Serial.println("\n=== TESTING MODE COMMANDS ===");
             Serial.println("ARM       - Arm the tracker");
@@ -302,6 +339,15 @@ void processSerialCommands() {
             Serial.println("ATSMS     - Test SMS commands");
             Serial.println("ATGPRS    - Test GPRS commands");
             Serial.println("ATHTTP    - Test HTTP commands");
+            Serial.println("");
+            Serial.println("=== GPS MODULE TESTING ===");
+            Serial.println("GPSTEST   - Run all GPS tests");
+            Serial.println("GPSBASIC  - Test basic GPS communication");
+            Serial.println("GPSNMEA   - Test NMEA sentence parsing");
+            Serial.println("GPSLOCATION - Test GPS fix and location");
+            Serial.println("GPSPERF   - Test GPS performance");
+            Serial.println("GPSSTATUS - Show current GPS status");
+            Serial.println("GPSRAW    - Display raw NMEA data");
             Serial.println("");
             Serial.println("HELP      - Show this menu");
             Serial.println("NOTE: Power management fully implemented");

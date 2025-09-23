@@ -22,6 +22,9 @@
     #define DEEP_SLEEP_TIMEOUT 900000     // 15 minutes for testing
     #define AT_COMMAND_TESTING true       // Enable AT command testing in testing mode
     #define AT_TEST_TIMEOUT 60000         // 60 second timeout for long AT tests
+    #define GPS_TESTING true              // Enable GPS testing in testing mode
+    #define GPS_TEST_TIMEOUT 120000       // 120 second timeout for GPS fix tests
+    #define GPS_NMEA_DISPLAY true         // Enable raw NMEA display in testing
 #else
     #define DEBUG_ENABLED false
     #define GPS_UPDATE_INTERVAL 60000     // 1 minute for production
@@ -32,13 +35,16 @@
     #define DEEP_SLEEP_TIMEOUT 7200000    // 2 hours for production
     #define AT_COMMAND_TESTING false      // Disable AT testing in production
     #define AT_TEST_TIMEOUT 10000         // 10 second timeout for production
+    #define GPS_TESTING false             // Disable GPS testing in production
+    #define GPS_TEST_TIMEOUT 30000        // 30 second timeout for production
+    #define GPS_NMEA_DISPLAY false        // Disable raw NMEA in production
 #endif
 
 // Emergency contact (modify for production use)
 #if CURRENT_MODE == MODE_TESTING
-    #define EMERGENCY_CONTACT "+1234567890"  // Test number
+    #define EMERGENCY_CONTACT "+639634905586"  // Test number
 #else
-    #define EMERGENCY_CONTACT "+1987654321"  // Real emergency contact
+    #define EMERGENCY_CONTACT "+639634905586"  // Real emergency contact
 #endif
 
 // Debug macro
