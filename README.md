@@ -46,13 +46,36 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 
 ### 🎯 Key Highlights
 
-- 🛰️ **Real-time GPS Tracking** with Neo6m module
-- 📱 **GSM Communication** via SIM800L for remote monitoring
-- ☀️ **Solar-powered** with dual 18650 battery backup
-- 🔋 **Extended Battery Life** with optimized power management
-- 🏠 **Weather-resistant** 3D-printed enclosure
-- 🔧 **Modular Code Architecture** for easy customization
-- 🚲 **Secure Bike Mounting** with custom clamp design
+- 🛰️ **Real-time GPS Tracking** with Neo6m module (fully implemented)
+- 📱 **GSM Communication** via SIM800L for remote monitoring (fully implemented) 
+- 🌐 **HTTP API Integration** with web services over GPRS (fully implemented)
+- ☀️ **Solar-powered** with dual 18650 battery backup (hardware design)
+- � **Modular Code Architecture** for easy customization (fully implemented)
+- 🏠 **Weather-resistant** 3D-printed enclosure (design provided)
+- � **Secure Bike Mounting** with custom clamp design (design provided)
+
+### 📊 **Implementation Status**
+
+#### ✅ **Core Features (Ready to Use)**
+- GPS tracking with NMEA parsing
+- SMS notifications and HTTP API
+- Motion detection (GPS-based)
+- Speed monitoring and alerts  
+- Geofencing with breach detection
+- System status monitoring
+- Dual mode operation (Testing/Production)
+- Network connectivity management
+
+#### ⚠️ **Hardware-Dependent Features (Code Ready)**
+- Battery monitoring (requires voltage sensor)
+- Theft detection (requires accelerometer)
+- LED status indication (requires LED on D8)
+- Audio alerts (requires buzzer on D7)
+
+#### 🚧 **Future Enhancements**
+- Power sleep modes
+- OTA updates
+- Mobile app integration
 
 ---
 
@@ -76,7 +99,7 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - Dual solar panel charging system
 - 2S BMS protection for 18650 lithium batteries
 - Buck converter voltage regulation
-- Low-power sleep modes for extended operation
+- Configurable update intervals for battery optimization
 
 ### 🏗️ **Hardware Design**
 - Robust PCB layout optimized for outdoor use
@@ -143,12 +166,14 @@ Source/BikeTracker/
 - `ARM/DISARM` - Security control
 - `STATUS` - Detailed system status
 - `DIAG` - Hardware diagnostics
-- `ALERT/SPEED` - Simulate alerts
+- `ALERT/SPEED/FENCE` - Simulate GPS-based alerts
 - `LOCATE` - Send location SMS
 - `API` - Test HTTP API connectivity
 - `CONNECT` - Test internet connectivity
 - `RESET` - Reset GPRS connection
 - `HELP` - Command reference
+
+**Note**: Battery and theft alerts are disabled (no physical sensors), but all GPS-based features are fully functional.
 
 ---
 
@@ -185,12 +210,12 @@ Source/BikeTracker/
 - 📊 System status monitoring
 
 #### ⭐ **Advanced Hardware (Additional Sensors Required)**
-- 🔋 **Battery Monitoring** - Requires voltage/current sensor
-- 🚨 **Theft Detection** - Requires accelerometer/gyroscope
-- 🔊 **Audio Alerts** - Requires buzzer/speaker
-- 💡 **Status LEDs** - Requires LED indicators
+- 🔋 **Battery Monitoring** - Requires voltage/current sensor (LED pins defined, code structure ready)
+- 🚨 **Theft Detection** - Requires accelerometer/gyroscope (alert type defined, code structure ready)
+- 🔊 **Audio Alerts** - Buzzer pin defined and function implemented (D7)
+- 💡 **Status LEDs** - LED pin defined and function implemented (D8)
 
-**Note**: The current implementation focuses on GPS+GSM functionality. Additional sensors can be added for enhanced features.
+**Note**: The current implementation focuses on GPS+GSM functionality. Additional sensors can be added for enhanced features. LED and buzzer functionality is implemented but requires physical components.
 
 ---
 
@@ -288,6 +313,8 @@ Solar Panels → Buck Converter → 2S BMS → 18650 Batteries
 | **GPS** | TX | D3 | GPIO0 | SoftwareSerial TX |
 | **GSM** | RX | D5 | GPIO14 | SoftwareSerial RX |
 | **GSM** | TX | D6 | GPIO12 | SoftwareSerial TX |
+| **Buzzer** | Signal | D7 | GPIO13 | Audio alerts (implemented) |
+| **Status LED** | Signal | D8 | GPIO15 | Status indication (implemented) |
 | **Power** | VIN | VIN | - | 5V Input |
 | **Debug** | USB | USB | - | Serial Monitor |
 
@@ -327,12 +354,45 @@ Solar Panels → Buck Converter → 2S BMS → 18650 Batteries
 
 ### 🔧 **Configuration Options**
 
+The system uses modular configuration files for easy customization:
+
+#### **Mode Configuration (ModeConfig.h)**
 ```cpp
-// In BikeTracker.ino, modify these parameters:
-#define GPS_BAUD_RATE 9600
-#define GSM_BAUD_RATE 9600
-#define DEBUG_BAUD_RATE 9600
-#define UPDATE_INTERVAL 1800000  // 30 minutes in milliseconds
+// Set operating mode
+#define CURRENT_MODE MODE_TESTING    // or MODE_PRODUCTION
+
+// Mode-specific settings
+#if CURRENT_MODE == MODE_TESTING
+    #define GPS_UPDATE_INTERVAL 5000      // 5 seconds for testing
+    #define SMS_ALERT_INTERVAL 30000      // 30 seconds for testing
+    #define MOTION_THRESHOLD 5            // Lower threshold for testing
+    #define MAX_SPEED_THRESHOLD 10        // km/h for testing alerts
+    #define EMERGENCY_CONTACT "+1234567890"  // Test number
+#endif
+```
+
+#### **API Configuration (APIConfig.h)**
+```cpp
+// Web API settings
+#define WEB_API_URL "https://your-api.com/api/tracker"
+#define DEVICE_ID "BIKE_TRACKER_001"
+#define APN_NAME "internet"
+
+// Update intervals
+#define HTTP_UPDATE_INTERVAL 30000       // 30 seconds
+#define HTTP_RETRY_ATTEMPTS 3
+#define CONNECTION_CHECK_INTERVAL 60000  // 1 minute
+```
+
+#### **Pin Configuration (PinConfig.h)**
+```cpp
+// Hardware pin assignments
+#define GPS_RX_PIN D2
+#define GPS_TX_PIN D3
+#define GSM_RX_PIN D5
+#define GSM_TX_PIN D6
+#define BUZZER_PIN D7
+#define LED_STATUS_PIN D8
 ```
 
 ---
@@ -488,12 +548,14 @@ The tracker sends location data in the following JSON format:
 The `alertType` field can contain the following values:
 
 - `""` (empty) - Regular location update
-- `"MOTION_DETECTED"` - Unauthorized movement detected (GPS-based)
-- `"SPEED_EXCEEDED"` - Speed limit exceeded (GPS-based)
-- `"GEOFENCE_BREACH"` - Vehicle left safe area (GPS-based)
-- `"SYSTEM_ERROR"` - System malfunction
-- `"GPS_LOST"` - GPS signal lost for extended period
-- `"GSM_LOST"` - GSM connection lost for extended period
+- `"MOTION_DETECTED"` - Unauthorized movement detected (GPS-based) ✅
+- `"SPEED_EXCEEDED"` - Speed limit exceeded (GPS-based) ✅
+- `"GEOFENCE_BREACH"` - Vehicle left safe area (GPS-based) ✅
+- `"SYSTEM_ERROR"` - System malfunction ✅
+- `"GPS_LOST"` - GPS signal lost for extended period ✅
+- `"GSM_LOST"` - GSM connection lost for extended period ✅
+
+**Note**: Battery monitoring and theft detection alerts require additional sensors not included in the basic GPS+GSM setup.
 
 #### **API Endpoint Requirements**
 
@@ -527,11 +589,20 @@ tracker.sendLocationToAPI();
 #### **Testing Commands**
 
 In testing mode, use these serial commands:
+- `ARM` - Arm the tracker
+- `DISARM` - Disarm the tracker
+- `STATUS` - View detailed system status
+- `DIAG` - Run hardware diagnostics
+- `ALERT` - Simulate motion alert
+- `SPEED` - Simulate speed alert
+- `FENCE` - Simulate geofence breach
+- `LOCATE` - Send location SMS
 - `API` - Manually send location to web API
-- `STATUS` - View HTTP connection status
-- `DIAG` - Check GPRS connectivity
 - `CONNECT` - Test internet connectivity
 - `RESET` - Reset GPRS connection
+- `HELP` - Show command menu
+
+**Note**: Battery and theft alerts are disabled (no sensors), but GPS-based alerts work fully.
 
 ---
 
@@ -706,9 +777,9 @@ HTTP POST result: SUCCESS
 - Use efficient data formats
 
 #### **Power Optimization**
-- Power down module during inactive periods
-- Use sleep modes when supported
-- Optimize update frequencies
+- Power down module during inactive periods (not implemented)
+- Use sleep modes when supported (not implemented)
+- Optimize update frequencies (implemented via configurable intervals)
 
 ### ✅ **Troubleshooting Checklist**
 
@@ -1028,16 +1099,52 @@ void sendAlert(String alertType) {
 
 ### ⚡ **Power Management**
 ```cpp
-void enterSleepMode() {
-    // Save current state
-    // Configure wake-up sources
-    ESP.deepSleep(30 * 60 * 1000000); // 30 minutes
+// Note: Battery monitoring requires additional voltage sensor
+void checkBatteryStatus() {
+    // Current implementation shows 100% without sensor
+    // TODO: Implement with actual voltage monitoring
+    // status.batteryLevel = readBatteryVoltage();
+    
+    // LED status indication is implemented
+    digitalWrite(LED_STATUS_PIN, (millis() / 1000) % 2);
 }
 ```
 
 ---
 
 ## 🔍 Troubleshooting
+
+### ✅ **What's Fully Implemented and Working**
+
+#### **GPS + GSM Core Features** ✅
+- Real-time GPS tracking with NMEA parsing
+- SMS notifications for alerts and status
+- HTTP API data transmission over GPRS
+- Motion detection based on GPS coordinates
+- Speed monitoring and alerts
+- Geofencing with breach detection
+- Dual mode operation (Testing/Production)
+- Serial command interface for testing
+- Network connectivity monitoring
+- Automatic GPRS reconnection
+
+#### **Hardware Features** ✅
+- LED status indication (requires LED on D8)
+- Buzzer alerts (requires buzzer on D7) 
+- Pin configurations defined and implemented
+- Modular code architecture
+
+### ⚠️ **Features Requiring Additional Sensors**
+
+#### **Battery Monitoring** ⚠️
+- **Status**: Code structure ready, displays 100% without sensor
+- **Requirements**: Voltage divider circuit + ADC reading
+- **Implementation**: Uncomment battery monitoring code in BikeTrackerCore.cpp
+
+#### **Theft Detection** ⚠️
+- **Status**: Alert type defined, code structure ready
+- **Requirements**: Accelerometer/gyroscope (e.g., MPU6050)
+- **Implementation**: Add sensor initialization and motion detection logic
 
 ### ❓ **Common Issues**
 
@@ -1101,11 +1208,12 @@ Serial.println("Battery: " + getBatteryVoltage() + "V");
 - ✅ Motion detection when armed (GPS-based)
 - ✅ Speed limit monitoring with configurable thresholds
 - ✅ Geofence boundary detection and breach alerts
-- ✅ Anti-theft alerts and emergency notifications
+- ✅ Emergency notifications via SMS and HTTP API
 - ✅ Remote status monitoring via HTTP API
-- ✅ Battery level monitoring and low power alerts
+- ⚠️ Battery level monitoring (requires voltage sensor - displays 100% without sensor)
 - ✅ Hardware failure detection and recovery
 - ✅ Network connectivity monitoring and recovery
+- ⚠️ Anti-theft alerts (requires accelerometer - alert type defined)
 
 #### 📱 **Communication Features**
 - ✅ SMS notification system for emergency alerts
@@ -1118,8 +1226,9 @@ Serial.println("Battery: " + getBatteryVoltage() + "V");
 #### 🔋 **Power Management**
 - ✅ Solar power integration with dual 18650 battery backup
 - ✅ Power optimization algorithms for extended battery life
-- ✅ Low power sleep modes for battery conservation
-- ✅ Battery voltage monitoring and alerts
+- ⚠️ Low power sleep modes (not implemented - code structure allows addition)
+- ⚠️ Battery voltage monitoring (requires voltage/current sensor - code ready)
+- ⚠️ Battery alerts (sensor-dependent - alert types defined)
 - ✅ Hardware component power control
 
 ### 🔮 **Planned Features** (v1.1.0)
