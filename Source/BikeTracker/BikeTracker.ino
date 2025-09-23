@@ -2,14 +2,15 @@
 // BikeTracker.ino
 #include <Arduino.h>
 #include <SoftwareSerial.h>
+
+#include "PinConfig.h"
 #include "Neo6mGPS.h"
 #include "Sim800L.h"
 
 
-// NodeMCU v3 1.0: Define pins for software serial ports
-// GPS: RX=D2, TX=D3; GSM: RX=D5, TX=D6
-SoftwareSerial SerialGPS(D2, D3); // RX, TX
-SoftwareSerial SerialGSM(D5, D6); // RX, TX
+// NodeMCU v3 1.0: Pins defined in PinConfig.h
+SoftwareSerial SerialGPS(GPS_RX_PIN, GPS_TX_PIN); // RX, TX
+SoftwareSerial SerialGSM(GSM_RX_PIN, GSM_TX_PIN); // RX, TX
 Neo6mGPS gps(SerialGPS);
 Sim800L gsm(SerialGSM);
 
