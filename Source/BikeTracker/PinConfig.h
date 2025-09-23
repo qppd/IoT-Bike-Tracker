@@ -11,4 +11,8 @@
 #define GSM_RX_PIN D5
 #define GSM_TX_PIN D6
 
+// Additional sensor pins
+#define BUZZER_PIN D7
+#define LED_STATUS_PIN D8
+
 #endif // PINCONFIG_H
