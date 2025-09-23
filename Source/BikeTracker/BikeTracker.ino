@@ -81,6 +81,15 @@ void setup() {
             Serial.println("SLEEP     - Enter sleep mode (5 min)");
             Serial.println("DEEPSLEEP - Enter deep sleep (30 min)");
             Serial.println("LOWPOWER  - Toggle low power mode");
+            Serial.println("");
+            Serial.println("=== AT COMMAND TESTING ===");
+            Serial.println("ATTEST    - Run all AT command tests");
+            Serial.println("ATBASIC   - Test basic AT commands");
+            Serial.println("ATNETWORK - Test network commands");
+            Serial.println("ATSMS     - Test SMS commands");
+            Serial.println("ATGPRS    - Test GPRS commands");
+            Serial.println("ATHTTP    - Test HTTP commands");
+            Serial.println("");
             Serial.println("HELP      - Show this menu");
             Serial.println("NOTE: Power management fully implemented");
             Serial.println("=============================\n");
@@ -244,6 +253,30 @@ void processSerialCommands() {
             Serial.println("Wake up requested");
             tracker.wakeFromSleep();
             
+        } else if (serialCommand == "ATTEST") {
+            Serial.println("Running comprehensive AT command tests...");
+            gsm.runAllATTests();
+            
+        } else if (serialCommand == "ATBASIC") {
+            Serial.println("Running basic AT command tests...");
+            gsm.runBasicATTests();
+            
+        } else if (serialCommand == "ATNETWORK") {
+            Serial.println("Running network AT command tests...");
+            gsm.runNetworkTests();
+            
+        } else if (serialCommand == "ATSMS") {
+            Serial.println("Running SMS AT command tests...");
+            gsm.runSMSTests();
+            
+        } else if (serialCommand == "ATGPRS") {
+            Serial.println("Running GPRS AT command tests...");
+            gsm.runGPRSTests();
+            
+        } else if (serialCommand == "ATHTTP") {
+            Serial.println("Running HTTP AT command tests...");
+            gsm.runHTTPTests();
+            
         } else if (serialCommand == "HELP") {
             Serial.println("\n=== TESTING MODE COMMANDS ===");
             Serial.println("ARM       - Arm the tracker");
@@ -261,6 +294,15 @@ void processSerialCommands() {
             Serial.println("DEEPSLEEP - Enter deep sleep (30 min)");
             Serial.println("LOWPOWER  - Toggle low power mode");
             Serial.println("WAKE      - Wake from sleep");
+            Serial.println("");
+            Serial.println("=== AT COMMAND TESTING ===");
+            Serial.println("ATTEST    - Run all AT command tests");
+            Serial.println("ATBASIC   - Test basic AT commands");
+            Serial.println("ATNETWORK - Test network commands");
+            Serial.println("ATSMS     - Test SMS commands");
+            Serial.println("ATGPRS    - Test GPRS commands");
+            Serial.println("ATHTTP    - Test HTTP commands");
+            Serial.println("");
             Serial.println("HELP      - Show this menu");
             Serial.println("NOTE: Power management fully implemented");
             Serial.println("=============================\n");

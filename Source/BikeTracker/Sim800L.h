@@ -50,6 +50,17 @@ public:
     void resetConnection();
     unsigned long getLastDataActivity();
     
+    // AT Command Testing Functions
+    void runBasicATTests();
+    void runNetworkTests();
+    void runSMSTests();
+    void runGPRSTests();
+    void runHTTPTests();
+    void runAllATTests();
+    void printTestResult(const String &testName, bool result, const String &details = "");
+    bool testATCommand(const String &command, const String &expectedResponse, const String &testName, int timeout = 5000);
+    void printATTestHeader(const String &category);
+    
 private:
     SoftwareSerial &gsmSerial;
     GSMStatus status;

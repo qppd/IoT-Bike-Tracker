@@ -20,6 +20,8 @@
     #define MAX_SPEED_THRESHOLD 10        // km/h for testing alerts
     #define SLEEP_TIMEOUT 300000          // 5 minutes for testing
     #define DEEP_SLEEP_TIMEOUT 900000     // 15 minutes for testing
+    #define AT_COMMAND_TESTING true       // Enable AT command testing in testing mode
+    #define AT_TEST_TIMEOUT 60000         // 60 second timeout for long AT tests
 #else
     #define DEBUG_ENABLED false
     #define GPS_UPDATE_INTERVAL 60000     // 1 minute for production
@@ -28,6 +30,8 @@
     #define MAX_SPEED_THRESHOLD 80        // km/h for production alerts
     #define SLEEP_TIMEOUT 1800000         // 30 minutes for production
     #define DEEP_SLEEP_TIMEOUT 7200000    // 2 hours for production
+    #define AT_COMMAND_TESTING false      // Disable AT testing in production
+    #define AT_TEST_TIMEOUT 10000         // 10 second timeout for production
 #endif
 
 // Emergency contact (modify for production use)

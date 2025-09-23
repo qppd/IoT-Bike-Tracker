@@ -533,3 +533,263 @@ bool Sim800L::performHTTPRequest(const String &method, const String &url, const 
     sendATCommand("AT+HTTPTERM", "OK", 5000);
     return false;
 }
+
+// =============================================================================
+// AT COMMAND TESTING FUNCTIONS
+// =============================================================================
+
+void Sim800L::printATTestHeader(const String &category) {
+    Serial.println("\n========================================");
+    Serial.println("  " + category + " AT COMMAND TESTS");
+    Serial.println("========================================");
+}
+
+void Sim800L::printTestResult(const String &testName, bool result, const String &details) {
+    Serial.print("[");
+    if (result) {
+        Serial.print("PASS");
+    } else {
+        Serial.print("FAIL");
+    }
+    Serial.print("] " + testName);
+    
+    if (details.length() > 0) {
+        Serial.print(" - " + details);
+    }
+    Serial.println();
+    
+    if (!result && lastResponse.length() > 0) {
+        Serial.println("    Response: " + lastResponse);
+    }
+}
+
+bool Sim800L::testATCommand(const String &command, const String &expectedResponse, const String &testName, int timeout) {
+    bool result = sendATCommand(command, expectedResponse, timeout);
+    
+    String details = "";
+    if (result && lastResponse.length() > 0) {
+        // Extract meaningful info from response
+        if (command.startsWith("AT+CSQ")) {
+            int start = lastResponse.indexOf("+CSQ: ") + 6;
+            int end = lastResponse.indexOf(",", start);
+            if (start > 5 && end > start) {
+                int rssi = lastResponse.substring(start, end).toInt();
+                details = "RSSI: " + String(rssi) + " dBm";
+            }
+        } else if (command.startsWith("AT+CREG")) {
+            if (lastResponse.indexOf(",1") > 0) details = "Registered (Home)";
+            else if (lastResponse.indexOf(",5") > 0) details = "Registered (Roaming)";
+            else if (lastResponse.indexOf(",2") > 0) details = "Searching...";
+            else if (lastResponse.indexOf(",0") > 0) details = "Not registered";
+        } else if (command.startsWith("AT+COPS")) {
+            int start = lastResponse.indexOf("\"") + 1;
+            int end = lastResponse.indexOf("\"", start);
+            if (start > 0 && end > start) {
+                details = "Operator: " + lastResponse.substring(start, end);
+            }
+        } else if (command.startsWith("AT+GSN")) {
+            // Extract IMEI
+            int start = lastResponse.indexOf('\n') + 1;
+            int end = lastResponse.indexOf('\n', start);
+            if (start > 0 && end > start) {
+                details = "IMEI: " + lastResponse.substring(start, end);
+            }
+        }
+    }
+    
+    printTestResult(testName, result, details);
+    delay(500); // Small delay between tests
+    return result;
+}
+
+void Sim800L::runBasicATTests() {
+    printATTestHeader("BASIC COMMUNICATION");
+    
+    // Test basic AT communication
+    testATCommand("AT", "OK", "Basic AT Command");
+    
+    // Test echo disable
+    testATCommand("ATE0", "OK", "Disable Echo");
+    
+    // Test manufacturer info
+    testATCommand("AT+GMI", "OK", "Get Manufacturer");
+    
+    // Test model info
+    testATCommand("AT+GMM", "OK", "Get Model");
+    
+    // Test firmware version
+    testATCommand("AT+GMR", "OK", "Get Firmware Version");
+    
+    // Test IMEI
+    testATCommand("AT+GSN", "OK", "Get IMEI");
+    
+    // Test SIM card status
+    testATCommand("AT+CPIN?", "OK", "Check SIM Status");
+    
+    // Test signal quality
+    testATCommand("AT+CSQ", "OK", "Signal Quality");
+    
+    // Test battery status (if supported)
+    testATCommand("AT+CBC", "OK", "Battery Status");
+    
+    Serial.println("Basic AT Tests Complete\n");
+}
+
+void Sim800L::runNetworkTests() {
+    printATTestHeader("NETWORK & REGISTRATION");
+    
+    // Test network registration
+    testATCommand("AT+CREG?", "OK", "Network Registration Status");
+    
+    // Test GPRS registration
+    testATCommand("AT+CGREG?", "OK", "GPRS Registration Status");
+    
+    // Test operator selection
+    testATCommand("AT+COPS?", "OK", "Current Operator");
+    
+    // Test available operators (this can take time)
+    Serial.println("[INFO] Scanning available operators (may take 30-60 seconds)...");
+    testATCommand("AT+COPS=?", "OK", "Available Operators", 60000);
+    
+    // Test preferred operator format
+    testATCommand("AT+COPS=3,0", "OK", "Set Operator Format to Long");
+    
+    // Test network time
+    testATCommand("AT+CCLK?", "OK", "Network Time");
+    
+    // Test location info (Cell tower info)
+    testATCommand("AT+CIPGSMLOC=1,1", "OK", "Cell Tower Location", 10000);
+    
+    Serial.println("Network Tests Complete\n");
+}
+
+void Sim800L::runSMSTests() {
+    printATTestHeader("SMS FUNCTIONALITY");
+    
+    // Test SMS text mode
+    testATCommand("AT+CMGF=1", "OK", "Set SMS Text Mode");
+    
+    // Test SMS storage
+    testATCommand("AT+CPMS?", "OK", "Check SMS Storage");
+    
+    // Test SMS center number
+    testATCommand("AT+CSCA?", "OK", "Get SMS Center Number");
+    
+    // Test SMS format
+    testATCommand("AT+CSCS=\"GSM\"", "OK", "Set Character Set to GSM");
+    
+    // Test read all SMS
+    testATCommand("AT+CMGL=\"ALL\"", "OK", "List All SMS Messages");
+    
+    // Test SMS configuration
+    testATCommand("AT+CNMI?", "OK", "SMS Notification Settings");
+    
+    // Configure SMS notifications
+    testATCommand("AT+CNMI=1,2,0,0,0", "OK", "Configure SMS Notifications");
+    
+    Serial.println("SMS Tests Complete\n");
+    Serial.println("[NOTE] To test SMS sending, use command: AT+CMGS=\"+1234567890\"");
+    Serial.println("       Then type message and send Ctrl+Z (ASCII 26)");
+}
+
+void Sim800L::runGPRSTests() {
+    printATTestHeader("GPRS CONNECTIVITY");
+    
+    // Test GPRS attachment
+    testATCommand("AT+CGATT?", "OK", "GPRS Attachment Status");
+    
+    // Test PDP context
+    testATCommand("AT+CGDCONT?", "OK", "PDP Context Settings");
+    
+    // Test bearer profile status
+    testATCommand("AT+SAPBR=2,1", "OK", "Bearer Profile Status");
+    
+    // Configure bearer profile for testing
+    testATCommand("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"", "OK", "Set Connection Type");
+    
+    // Test with a common APN (user should modify for their carrier)
+    testATCommand("AT+SAPBR=3,1,\"APN\",\"internet\"", "OK", "Set Test APN");
+    
+    // Test opening bearer (this will fail without proper APN)
+    Serial.println("[INFO] Testing bearer connection (may fail without proper APN)...");
+    testATCommand("AT+SAPBR=1,1", "OK", "Open Bearer Connection", 30000);
+    
+    // Check bearer status again
+    testATCommand("AT+SAPBR=2,1", "OK", "Bearer Status After Connection");
+    
+    // Close bearer
+    testATCommand("AT+SAPBR=0,1", "OK", "Close Bearer Connection");
+    
+    // Test GPRS status
+    testATCommand("AT+CGPADDR", "OK", "Get GPRS IP Address");
+    
+    Serial.println("GPRS Tests Complete\n");
+    Serial.println("[NOTE] GPRS tests require valid APN configuration");
+}
+
+void Sim800L::runHTTPTests() {
+    printATTestHeader("HTTP FUNCTIONALITY");
+    
+    // Test HTTP initialization
+    testATCommand("AT+HTTPINIT", "OK", "Initialize HTTP Service");
+    
+    // Test HTTP parameters
+    testATCommand("AT+HTTPPARA=\"CID\",1", "OK", "Set HTTP CID Parameter");
+    
+    // Test URL setting
+    testATCommand("AT+HTTPPARA=\"URL\",\"http://httpbin.org/get\"", "OK", "Set HTTP URL");
+    
+    // Test User-Agent setting
+    testATCommand("AT+HTTPPARA=\"USERDATA\",\"User-Agent: BikeTracker/1.0\"", "OK", "Set User Agent");
+    
+    // Test HTTP timeout
+    testATCommand("AT+HTTPPARA=\"REDIR\",1", "OK", "Enable HTTP Redirect");
+    
+    // Test content type for POST
+    testATCommand("AT+HTTPPARA=\"CONTENT\",\"application/json\"", "OK", "Set Content Type");
+    
+    // Test SSL parameters (if supported)
+    testATCommand("AT+HTTPSSL=0", "OK", "Disable HTTPS");
+    
+    // Note: Actual HTTP GET/POST requires GPRS connection
+    Serial.println("[INFO] Actual HTTP requests require active GPRS connection");
+    
+    // Terminate HTTP service
+    testATCommand("AT+HTTPTERM", "OK", "Terminate HTTP Service");
+    
+    Serial.println("HTTP Tests Complete\n");
+}
+
+void Sim800L::runAllATTests() {
+    Serial.println("\n#########################################");
+    Serial.println("#     SIM800L AT COMMAND TEST SUITE    #");
+    Serial.println("#########################################");
+    Serial.println("Starting comprehensive AT command testing...");
+    Serial.println("Test Duration: Approximately 3-5 minutes");
+    
+    unsigned long startTime = millis();
+    
+    // Run all test categories
+    runBasicATTests();
+    runNetworkTests();
+    runSMSTests();
+    runGPRSTests();
+    runHTTPTests();
+    
+    unsigned long endTime = millis();
+    unsigned long duration = (endTime - startTime) / 1000;
+    
+    Serial.println("#########################################");
+    Serial.println("#           TEST SUMMARY                #");
+    Serial.println("#########################################");
+    Serial.println("Total Test Duration: " + String(duration) + " seconds");
+    Serial.println("All AT command tests completed!");
+    Serial.println();
+    Serial.println("USAGE TIPS:");
+    Serial.println("- Check signal strength (CSQ): >10 is good, >15 is excellent");
+    Serial.println("- Ensure SIM card is inserted and unlocked");
+    Serial.println("- Configure correct APN for your carrier");
+    Serial.println("- For SMS testing, use valid phone numbers");
+    Serial.println("- HTTP tests require active GPRS connection");
+    Serial.println("#########################################\n");
+}
