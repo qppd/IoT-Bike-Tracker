@@ -10,8 +10,6 @@
 
 **An advanced, solar-powered GPS bike tracker with real-time location monitoring and GSM communication capabilities**
 
-*📖 Complete documentation including SIM800L setup, HTTP API integration, and web development guides - all unified in this comprehensive README*
-
 [🚀 Quick Start](#-quick-start) • [📋 Features](#-features) • [🔧 Hardware](#-hardware-requirements) • [📖 Documentation](#-api-documentation) • [🤝 Contributing](#-contributing)
 
 </div>
