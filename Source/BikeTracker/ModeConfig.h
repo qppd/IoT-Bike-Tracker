@@ -18,12 +18,16 @@
     #define SMS_ALERT_INTERVAL 30000      // 30 seconds for testing
     #define MOTION_THRESHOLD 5            // Lower threshold for testing
     #define MAX_SPEED_THRESHOLD 10        // km/h for testing alerts
+    #define SLEEP_TIMEOUT 300000          // 5 minutes for testing
+    #define DEEP_SLEEP_TIMEOUT 900000     // 15 minutes for testing
 #else
     #define DEBUG_ENABLED false
     #define GPS_UPDATE_INTERVAL 60000     // 1 minute for production
     #define SMS_ALERT_INTERVAL 300000     // 5 minutes for production
     #define MOTION_THRESHOLD 15           // Higher threshold for production
     #define MAX_SPEED_THRESHOLD 80        // km/h for production alerts
+    #define SLEEP_TIMEOUT 1800000         // 30 minutes for production
+    #define DEEP_SLEEP_TIMEOUT 7200000    // 2 hours for production
 #endif
 
 // Emergency contact (modify for production use)

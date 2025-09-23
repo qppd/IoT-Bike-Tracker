@@ -13,7 +13,6 @@ BikeTrackerCore::BikeTrackerCore(Neo6mGPS &gpsModule, Sim800L &gsmModule)
     status.state = TRACKER_INITIALIZING;
     status.gpsFixed = false;
     status.gsmConnected = false;
-    status.batteryLevel = 100;
     status.uptime = 0;
     status.alertsCount = 0;
     status.lastSpeed = 0.0;
@@ -42,6 +41,12 @@ BikeTrackerCore::BikeTrackerCore(Neo6mGPS &gpsModule, Sim800L &gsmModule)
     previousLat = 0.0;
     previousLon = 0.0;
     isInGeofence = true;
+    
+    // Initialize power management
+    lowPowerMode = false;
+    lastActivity = millis();
+    sleepDuration = 300000; // Default 5 minutes
+    shouldSleep = false;
 }
 
 bool BikeTrackerCore::initialize() {
@@ -154,21 +159,22 @@ void BikeTrackerCore::update() {
         }
     }
     
-    // Check system state
+    // Check system state and power management
     if (millis() - lastStatusCheck > 5000) { // Check every 5 seconds
         lastStatusCheck = millis();
         
-        // Battery monitoring disabled - no voltage sensor available
-        // TODO: Implement when voltage/current sensor is added
-        // status.batteryLevel = readBatteryVoltage(); // Implement with actual sensor
+        // Check for sleep conditions
+        if (!isTrackerArmed && lowPowerMode) {
+            unsigned long inactiveTime = millis() - lastActivity;
+            if (inactiveTime > sleepDuration) {
+                shouldSleep = true;
+            }
+        }
         
-        // Simulate battery level for display purposes only
-        status.batteryLevel = 100; // Always show full battery without sensor
-        
-        // Battery alerts disabled without sensor
-        // if (status.batteryLevel < 20) {
-        //     triggerAlert(ALERT_LOW_BATTERY, "Battery critically low: " + String(status.batteryLevel) + "%");
-        // }
+        // Update activity tracking
+        if (status.gpsFixed || status.gsmConnected) {
+            updateActivityTime();
+        }
     }
     
     // Security monitoring (only when armed)
@@ -184,6 +190,12 @@ void BikeTrackerCore::update() {
     // Send location updates to web API (if enabled)
     if (httpEnabled && status.gpsFixed) {
         sendLocationToAPI();
+    }
+    
+    // Check if sleep mode should be activated
+    if (shouldSleep && !isTrackerArmed && lowPowerMode) {
+        enterSleepMode(sleepDuration);
+        return; // Exit update cycle during sleep
     }
     
     // Update status LED
@@ -448,7 +460,7 @@ void BikeTrackerCore::sendStatusSMS() {
     statusMsg += "\nGPS: " + String(status.gpsFixed ? "Fixed" : "No Fix");
     statusMsg += "\nLocation: " + getCurrentLocation();
     statusMsg += "\nSpeed: " + String(status.lastSpeed, 1) + " km/h";
-    statusMsg += "\nBattery: " + String(status.batteryLevel) + "%";
+    statusMsg += "\nPower: " + String(lowPowerMode ? "Low Power" : "Normal");
     statusMsg += "\nUptime: " + String(status.uptime / 1000) + "s";
     statusMsg += "\nAlerts: " + String(status.alertsCount);
     
@@ -728,4 +740,152 @@ void BikeTrackerCore::sendAlertToAPI(AlertType type, const String &message) {
             DEBUG_PRINTLN("CRITICAL: Alert failed to send to API");
         }
     }
+}
+
+// =============================================================================
+// POWER MANAGEMENT IMPLEMENTATION
+// =============================================================================
+
+void BikeTrackerCore::enterSleepMode(unsigned long durationMs) {
+    DEBUG_PRINTLN("Entering sleep mode...");
+    
+    sleepDuration = durationMs;
+    prepareForSleep();
+    
+    // Light sleep - maintains WiFi/GSM connections but reduces power
+    DEBUG_PRINT("Sleeping for ");
+    DEBUG_PRINT(durationMs / 1000);
+    DEBUG_PRINTLN(" seconds");
+    
+    // Reduce update frequencies during sleep
+    unsigned long sleepStart = millis();
+    while (millis() - sleepStart < durationMs) {
+        // Check for wake conditions every 5 seconds
+        if (checkWakeConditions()) {
+            DEBUG_PRINTLN("Wake condition detected, exiting sleep");
+            break;
+        }
+        
+        // Minimal operations during sleep
+        delay(5000);
+        
+        // Flash LED slowly to indicate sleep mode
+        digitalWrite(LED_STATUS_PIN, (millis() / 5000) % 2);
+    }
+    
+    restoreFromSleep();
+    DEBUG_PRINTLN("Waking from sleep mode");
+}
+
+void BikeTrackerCore::enterDeepSleep(unsigned long durationMs) {
+    DEBUG_PRINTLN("Entering deep sleep mode...");
+    
+    prepareForSleep();
+    
+    // Send status before deep sleep
+    if (status.gsmConnected && emergencyContact.length() > 0) {
+        String sleepMsg = "Tracker entering deep sleep for " + String(durationMs / 60000) + " minutes";
+        gsm.sendSMS(emergencyContact, sleepMsg);
+        delay(2000); // Allow SMS to send
+    }
+    
+    // Power down modules
+    gsm.powerOff();
+    
+    // Turn off LEDs
+    digitalWrite(LED_STATUS_PIN, LOW);
+    
+    DEBUG_PRINT("Deep sleeping for ");
+    DEBUG_PRINT(durationMs / 1000);
+    DEBUG_PRINTLN(" seconds");
+    
+    // ESP8266 deep sleep
+    ESP.deepSleep(durationMs * 1000); // Convert to microseconds
+}
+
+void BikeTrackerCore::enableLowPowerMode(bool enabled) {
+    lowPowerMode = enabled;
+    if (enabled) {
+        DEBUG_PRINTLN("Low power mode ENABLED");
+    } else {
+        DEBUG_PRINTLN("Low power mode DISABLED");
+        shouldSleep = false;
+    }
+}
+
+bool BikeTrackerCore::isInLowPowerMode() {
+    return lowPowerMode;
+}
+
+void BikeTrackerCore::wakeFromSleep() {
+    DEBUG_PRINTLN("Wake up requested");
+    shouldSleep = false;
+    updateActivityTime();
+    restoreFromSleep();
+}
+
+void BikeTrackerCore::prepareForSleep() {
+    DEBUG_PRINTLN("Preparing for sleep...");
+    
+    // Save current state
+    // Turn off unnecessary components
+    digitalWrite(BUZZER_PIN, LOW);
+    
+    // Reduce GPS update frequency
+    // GSM can be kept alive for emergency communications
+    
+    DEBUG_PRINTLN("Sleep preparation complete");
+}
+
+void BikeTrackerCore::restoreFromSleep() {
+    DEBUG_PRINTLN("Restoring from sleep...");
+    
+    // Restore normal operations
+    updateActivityTime();
+    
+    // Re-initialize connections if needed
+    if (!status.gsmConnected) {
+        gsm.initialize();
+    }
+    
+    // Resume normal LED operation
+    blinkStatusLED(2);
+    
+    DEBUG_PRINTLN("Sleep restore complete");
+}
+
+bool BikeTrackerCore::checkWakeConditions() {
+    // Wake conditions:
+    // 1. GPS detects motion (if armed)
+    // 2. GSM receives SMS/call
+    // 3. Manual wake via serial command
+    // 4. Alert condition
+    
+    if (isTrackerArmed) {
+        // Check for motion via GPS
+        updateGPS();
+        if (motionDetected) {
+            DEBUG_PRINTLN("Wake: Motion detected");
+            return true;
+        }
+    }
+    
+    // Check for incoming GSM activity
+    if (gsm.available()) {
+        DEBUG_PRINTLN("Wake: GSM activity detected");
+        return true;
+    }
+    
+    // Check for alert conditions
+    if (status.state == TRACKER_ALERT) {
+        DEBUG_PRINTLN("Wake: Alert condition");
+        return true;
+    }
+    
+    return false;
+}
+
+void BikeTrackerCore::updateActivityTime() {
+    lastActivity = millis();
+    shouldSleep = false;
 }

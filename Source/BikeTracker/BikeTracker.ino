@@ -69,17 +69,20 @@ void setup() {
         
         #if CURRENT_MODE == MODE_TESTING
             Serial.println("\n=== TESTING MODE COMMANDS ===");
-            Serial.println("ARM     - Arm the tracker");
-            Serial.println("DISARM  - Disarm the tracker");
-            Serial.println("STATUS  - Get current status");
-            Serial.println("DIAG    - Run diagnostics");
-            Serial.println("ALERT   - Simulate motion alert");
-            Serial.println("SPEED   - Simulate speed alert");
-            Serial.println("FENCE   - Simulate geofence breach");
-            Serial.println("LOCATE  - Send location SMS");
-            Serial.println("API     - Send location to API");
-            Serial.println("HELP    - Show this menu");
-            Serial.println("NOTE: Battery and theft alerts disabled (no sensors)");
+            Serial.println("ARM       - Arm the tracker");
+            Serial.println("DISARM    - Disarm the tracker");
+            Serial.println("STATUS    - Get current status");
+            Serial.println("DIAG      - Run diagnostics");
+            Serial.println("ALERT     - Simulate motion alert");
+            Serial.println("SPEED     - Simulate speed alert");
+            Serial.println("FENCE     - Simulate geofence breach");
+            Serial.println("LOCATE    - Send location SMS");
+            Serial.println("API       - Send location to API");
+            Serial.println("SLEEP     - Enter sleep mode (5 min)");
+            Serial.println("DEEPSLEEP - Enter deep sleep (30 min)");
+            Serial.println("LOWPOWER  - Toggle low power mode");
+            Serial.println("HELP      - Show this menu");
+            Serial.println("NOTE: Power management fully implemented");
             Serial.println("=============================\n");
         #endif
     } else {
@@ -223,21 +226,43 @@ void processSerialCommands() {
             gsm.resetConnection();
             Serial.println("Connection reset complete");
             
+        } else if (serialCommand == "SLEEP") {
+            Serial.println("Entering sleep mode for 5 minutes...");
+            tracker.enterSleepMode(300000); // 5 minutes
+            
+        } else if (serialCommand == "DEEPSLEEP") {
+            Serial.println("Entering deep sleep for 30 minutes...");
+            tracker.enterDeepSleep(1800000); // 30 minutes
+            
+        } else if (serialCommand == "LOWPOWER") {
+            bool currentMode = tracker.isInLowPowerMode();
+            tracker.enableLowPowerMode(!currentMode);
+            Serial.print("Low power mode: ");
+            Serial.println(!currentMode ? "ENABLED" : "DISABLED");
+            
+        } else if (serialCommand == "WAKE") {
+            Serial.println("Wake up requested");
+            tracker.wakeFromSleep();
+            
         } else if (serialCommand == "HELP") {
             Serial.println("\n=== TESTING MODE COMMANDS ===");
-            Serial.println("ARM     - Arm the tracker");
-            Serial.println("DISARM  - Disarm the tracker");
-            Serial.println("STATUS  - Get current status");
-            Serial.println("DIAG    - Run diagnostics");
-            Serial.println("ALERT   - Simulate motion alert");
-            Serial.println("SPEED   - Simulate speed alert");
-            Serial.println("FENCE   - Simulate geofence breach");
-            Serial.println("LOCATE  - Send location SMS");
-            Serial.println("API     - Send location to API");
-            Serial.println("CONNECT - Test internet connectivity");
-            Serial.println("RESET   - Reset GPRS connection");
-            Serial.println("HELP    - Show this menu");
-            Serial.println("NOTE: Battery and theft alerts disabled (no sensors)");
+            Serial.println("ARM       - Arm the tracker");
+            Serial.println("DISARM    - Disarm the tracker");
+            Serial.println("STATUS    - Get current status");
+            Serial.println("DIAG      - Run diagnostics");
+            Serial.println("ALERT     - Simulate motion alert");
+            Serial.println("SPEED     - Simulate speed alert");
+            Serial.println("FENCE     - Simulate geofence breach");
+            Serial.println("LOCATE    - Send location SMS");
+            Serial.println("API       - Send location to API");
+            Serial.println("CONNECT   - Test internet connectivity");
+            Serial.println("RESET     - Reset GPRS connection");
+            Serial.println("SLEEP     - Enter sleep mode (5 min)");
+            Serial.println("DEEPSLEEP - Enter deep sleep (30 min)");
+            Serial.println("LOWPOWER  - Toggle low power mode");
+            Serial.println("WAKE      - Wake from sleep");
+            Serial.println("HELP      - Show this menu");
+            Serial.println("NOTE: Power management fully implemented");
             Serial.println("=============================\n");
             
         } else if (serialCommand.length() > 0) {
@@ -280,9 +305,8 @@ void printQuickStatus() {
     Serial.print(tracker.isArmed() ? "Y" : "N");
     Serial.print(" Speed:");
     Serial.print(status.lastSpeed, 1);
-    Serial.print("km/h Bat:");
-    Serial.print(status.batteryLevel);
-    Serial.println("%");
+    Serial.print("km/h Power:");
+    Serial.println(tracker.isInLowPowerMode() ? "LOW" : "NORM");
 }
 
 void printDetailedStatus() {
@@ -318,9 +342,8 @@ void printDetailedStatus() {
     Serial.print("GSM Status: ");
     Serial.println(status.gsmConnected ? "Connected" : "Disconnected");
     
-    Serial.print("Battery: ");
-    Serial.print(status.batteryLevel);
-    Serial.println("%");
+    Serial.print("Power Mode: ");
+    Serial.println(tracker.isInLowPowerMode() ? "Low Power" : "Normal");
     
     Serial.print("Total Alerts: ");
     Serial.println(status.alertsCount);

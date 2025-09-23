@@ -23,17 +23,14 @@ enum AlertType {
     ALERT_SPEED_EXCEEDED,      // ✅ Works with GPS
     ALERT_GEOFENCE_BREACH,     // ✅ Works with GPS
     ALERT_SYSTEM_ERROR,        // ✅ Works with software monitoring
-    // ALERT_THEFT_DETECTED,   // ❌ Requires additional sensors (accelerometer, etc.)
-    // ALERT_LOW_BATTERY,       // ❌ Requires voltage/current sensor
-    ALERT_GPS_LOST,            // ✅ New: GPS fix lost alert
-    ALERT_GSM_LOST             // ✅ New: GSM connection lost alert
+    ALERT_GPS_LOST,            // ✅ GPS fix lost alert
+    ALERT_GSM_LOST             // ✅ GSM connection lost alert
 };
 
 struct TrackerStatus {
     TrackerState state;
     bool gpsFixed;
     bool gsmConnected;
-    int batteryLevel;
     unsigned long uptime;
     int alertsCount;
     float lastSpeed;
@@ -74,6 +71,13 @@ public:
     void runDiagnostics();
     void simulateAlert(AlertType type);
     
+    // Power management functions
+    void enterSleepMode(unsigned long durationMs = 300000); // Default 5 minutes
+    void enterDeepSleep(unsigned long durationMs = 1800000); // Default 30 minutes
+    void enableLowPowerMode(bool enabled = true);
+    bool isInLowPowerMode();
+    void wakeFromSleep();
+    
 private:
     Neo6mGPS &gps;
     Sim800L &gsm;
@@ -100,6 +104,12 @@ private:
     float previousLat, previousLon;
     bool isInGeofence;
     
+    // Power management
+    bool lowPowerMode;
+    unsigned long lastActivity;
+    unsigned long sleepDuration;
+    bool shouldSleep;
+    
     // Internal functions
     void checkMotion();
     void checkSpeed();
@@ -112,6 +122,12 @@ private:
     String formatLocationMessage(const String &alertType = "");
     void blinkStatusLED(int times);
     void activateBuzzer(int duration);
+    
+    // Power management helpers
+    void prepareForSleep();
+    void restoreFromSleep();
+    bool checkWakeConditions();
+    void updateActivityTime();
 };
 
 #endif // BIKETRACKERCORE_H
