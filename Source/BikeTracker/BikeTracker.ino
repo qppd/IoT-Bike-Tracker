@@ -9,6 +9,7 @@
 // Project headers
 #include "ModeConfig.h"
 #include "PinConfig.h"
+#include "APIConfig.h"
 #include "Neo6mGPS.h"
 #include "Sim800L.h"
 #include "BikeTrackerCore.h"
@@ -61,6 +62,11 @@ void setup() {
     if (tracker.initialize()) {
         DEBUG_PRINTLN("BikeTracker initialization successful!");
         
+        // Configure Web API (modify values in APIConfig.h)
+        #if HTTP_ENABLED
+            tracker.setWebAPI(WEB_API_URL, DEVICE_ID, APN_NAME);
+        #endif
+        
         #if CURRENT_MODE == MODE_TESTING
             Serial.println("\n=== TESTING MODE COMMANDS ===");
             Serial.println("ARM     - Arm the tracker");
@@ -69,8 +75,11 @@ void setup() {
             Serial.println("DIAG    - Run diagnostics");
             Serial.println("ALERT   - Simulate motion alert");
             Serial.println("SPEED   - Simulate speed alert");
+            Serial.println("FENCE   - Simulate geofence breach");
             Serial.println("LOCATE  - Send location SMS");
+            Serial.println("API     - Send location to API");
             Serial.println("HELP    - Show this menu");
+            Serial.println("NOTE: Battery and theft alerts disabled (no sensors)");
             Serial.println("=============================\n");
         #endif
     } else {
@@ -193,9 +202,26 @@ void processSerialCommands() {
             tracker.simulateAlert(ALERT_SPEED_EXCEEDED);
             Serial.println("Speed alert simulated");
             
+        } else if (serialCommand == "FENCE") {
+            tracker.simulateAlert(ALERT_GEOFENCE_BREACH);
+            Serial.println("Geofence breach alert simulated");
+            
         } else if (serialCommand == "LOCATE") {
             tracker.sendStatusSMS();
             Serial.println("Location SMS sent");
+            
+        } else if (serialCommand == "API") {
+            tracker.sendLocationToAPI();
+            Serial.println("Location sent to API");
+            
+        } else if (serialCommand == "CONNECT") {
+            Serial.println("Testing internet connectivity...");
+            testInternetConnectivity();
+            
+        } else if (serialCommand == "RESET") {
+            Serial.println("Resetting GPRS connection...");
+            gsm.resetConnection();
+            Serial.println("Connection reset complete");
             
         } else if (serialCommand == "HELP") {
             Serial.println("\n=== TESTING MODE COMMANDS ===");
@@ -205,8 +231,13 @@ void processSerialCommands() {
             Serial.println("DIAG    - Run diagnostics");
             Serial.println("ALERT   - Simulate motion alert");
             Serial.println("SPEED   - Simulate speed alert");
+            Serial.println("FENCE   - Simulate geofence breach");
             Serial.println("LOCATE  - Send location SMS");
+            Serial.println("API     - Send location to API");
+            Serial.println("CONNECT - Test internet connectivity");
+            Serial.println("RESET   - Reset GPRS connection");
             Serial.println("HELP    - Show this menu");
+            Serial.println("NOTE: Battery and theft alerts disabled (no sensors)");
             Serial.println("=============================\n");
             
         } else if (serialCommand.length() > 0) {
@@ -300,3 +331,61 @@ void printDetailedStatus() {
     
     Serial.println("================================\n");
 }
+
+#if CURRENT_MODE == MODE_TESTING
+void testInternetConnectivity() {
+    Serial.println("=== Internet Connectivity Test ===");
+    
+    // Check GSM status
+    Serial.print("GSM Network: ");
+    if (gsm.isNetworkConnected()) {
+        Serial.println("Connected");
+        
+        // Check signal strength
+        int signal = gsm.getSignalStrength();
+        Serial.print("Signal Strength: ");
+        Serial.print(signal);
+        Serial.println(" (0-31, higher is better)");
+        
+        // Check GPRS connection
+        Serial.print("GPRS Status: ");
+        if (gsm.isGPRSConnected()) {
+            Serial.println("Connected");
+            
+            // Show local IP
+            String localIP = gsm.getLocalIP();
+            Serial.print("Local IP: ");
+            Serial.println(localIP);
+            
+            // Test internet connectivity
+            Serial.print("Internet Test: ");
+            if (gsm.checkInternetConnectivity()) {
+                Serial.println("SUCCESS - Internet accessible");
+                
+                // Test API connectivity if configured
+                if (strlen(WEB_API_URL) > 0 && strcmp(WEB_API_URL, "https://your-api.com/api/tracker") != 0) {
+                    Serial.println("Testing API connectivity...");
+                    tracker.sendLocationToAPI();
+                } else {
+                    Serial.println("API URL not configured (check APIConfig.h)");
+                }
+            } else {
+                Serial.println("FAILED - No internet access");
+            }
+        } else {
+            Serial.println("Disconnected");
+            Serial.println("Attempting GPRS reconnection...");
+            
+            if (gsm.reconnectGPRS()) {
+                Serial.println("GPRS reconnection successful");
+            } else {
+                Serial.println("GPRS reconnection failed");
+            }
+        }
+    } else {
+        Serial.println("No network connection");
+    }
+    
+    Serial.println("=== Test Complete ===");
+}
+#endif

@@ -62,6 +62,8 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 
 ### 📡 **GSM Communication**
 - SMS-based location reporting via SIM800L module
+- **HTTP POST requests** to web APIs over GPRS
+- Real-time data transmission to cloud services
 - Remote command processing capability
 - Network status monitoring and error handling
 - Configurable message intervals (default: 30 minutes)
@@ -107,6 +109,24 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - **Operating Voltage**: 3.3V (MCU) / 5V (Modules)
 - **Power Consumption**: ~200mA (Active) / ~50μA (Sleep)
 - **Battery Life**: 7-14 days (weather dependent)
+
+### ⚡ **Feature Compatibility**
+
+#### ✅ **Basic Hardware (GPS + GSM + MCU)**
+- 🛰️ Real-time GPS tracking
+- 📱 SMS notifications and HTTP API
+- 🚶 Motion detection (GPS-based)
+- 🏎️ Speed monitoring and alerts
+- 🗺️ Geofencing with breach detection
+- 📊 System status monitoring
+
+#### ⭐ **Advanced Hardware (Additional Sensors Required)**
+- 🔋 **Battery Monitoring** - Requires voltage/current sensor
+- 🚨 **Theft Detection** - Requires accelerometer/gyroscope
+- 🔊 **Audio Alerts** - Requires buzzer/speaker
+- 💡 **Status LEDs** - Requires LED indicators
+
+**Note**: The current implementation focuses on GPS+GSM functionality. Additional sensors can be added for enhanced features.
 
 ---
 
@@ -304,6 +324,10 @@ Initializes GSM module with specified serial interface.
 | `sendSMS(String number, String message)` | `void` | Send SMS to specified number |
 | `available()` | `bool` | Check if GSM data is available |
 | `read()` | `String` | Read GSM response data |
+| `initializeGPRS(String apn, String user, String pass)` | `bool` | Initialize GPRS connection |
+| `sendHTTPPOST(String url, String jsonData, String &response)` | `bool` | Send HTTP POST request |
+| `sendLocationHTTP(String url, String deviceId, float lat, float lon, String alertType)` | `bool` | Send location data to web API |
+| `disconnectGPRS()` | `void` | Disconnect GPRS connection |
 
 #### **Usage Example**
 ```cpp
@@ -318,6 +342,73 @@ void sendLocation() {
     gsm.sendSMS("+1234567890", "Bike Location: lat,lng");
 }
 ```
+
+### 🌐 **HTTP API Integration**
+
+The bike tracker now supports sending location data to web APIs via HTTP POST requests over GPRS.
+
+#### **Configuration**
+
+Edit `APIConfig.h` to configure your web API:
+
+```cpp
+// Your web API endpoint
+#define WEB_API_URL "https://your-api.com/api/tracker"
+
+// Unique device identifier
+#define DEVICE_ID "BIKE_TRACKER_001"
+
+// Mobile carrier APN
+#define APN_NAME "internet"
+
+// Update interval (milliseconds)
+#define HTTP_UPDATE_INTERVAL 30000  // 30 seconds
+
+// Enable/disable HTTP functionality
+#define HTTP_ENABLED true
+```
+
+#### **JSON Data Format**
+
+The tracker sends location data in the following JSON format:
+
+```json
+{
+    "deviceId": "BIKE_TRACKER_001",
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "timestamp": "1640995200000",
+    "alertType": "MOTION_DETECTED",
+    "signalStrength": 25
+}
+```
+
+#### **API Endpoint Requirements**
+
+Your web API should accept POST requests with:
+- **Content-Type**: `application/json`
+- **HTTP Method**: `POST`
+- **Expected Response**: HTTP 200-299 for success
+
+#### **Usage Example**
+
+```cpp
+// Configure the web API in setup()
+void setup() {
+    tracker.setWebAPI(WEB_API_URL, DEVICE_ID, APN_NAME);
+}
+
+// Location data is automatically sent every HTTP_UPDATE_INTERVAL
+// Manual sending can be triggered with:
+tracker.sendLocationToAPI();
+```
+
+#### **Testing Commands**
+
+In testing mode, use these serial commands:
+- `API` - Manually send location to web API
+- `STATUS` - View HTTP connection status
+- `DIAG` - Check GPRS connectivity
 
 ---
 
