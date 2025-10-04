@@ -107,6 +107,33 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - Secure bike mounting system with anti-theft features
 - Temperature-resistant component selection
 
+### 🧩 Bike Tracker Case Models
+
+Below are the provided 3D model previews and links for the enclosure (top and bottom). Files are included in the `model/` folder (STL + GCODE where available). These are sized for the internal components (NodeMCU, SIM800L, Neo6m and batteries) — verify fit with your components before printing.
+
+<div align="center">
+    <table>
+        <tr>
+            <td align="center">
+                <img src="model/Bike_Tracker_Case_Top.png" alt="Bike Tracker Case Top" style="max-width:320px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <br />
+                <strong>Case Top</strong>
+                <br />
+                <a href="model/Bike_Tracker_Case_Top.png">View PNG</a> · <a href="model/Bike_Tracker_Case.stl">Download STL</a>
+            </td>
+            <td align="center">
+                <img src="model/Bike_Tracker_Case_Bottom.png" alt="Bike Tracker Case Bottom" style="max-width:320px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <br />
+                <strong>Case Bottom</strong>
+                <br />
+                <a href="model/Bike_Tracker_Case_Bottom.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case.gcode">Download GCODE</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+> Printing notes: Use PETG or ABS for better weather resistance. Consider adding internal standoffs for the PCB and cable exits with grommets for water protection.
+
 ### 💾 **Software Architecture**
 - Object-oriented C++ design with separate classes
 - Modular GPS and GSM communication libraries
@@ -287,6 +314,16 @@ Solar Panels → Buck Converter → 2S BMS → 18650 Batteries
    5V Input    →  Regulated   →  7.4V    →  Power
                    Voltage      Storage     Backup
 ```
+
+### 🖼️ Wiring Diagram
+
+The wiring diagram below shows the recommended connections between the NodeMCU (ESP8266), Neo6m GPS, SIM800L, power system (buck converters and 2S BMS) and optional buzzer / status LED. Use the diagram as a reference when assembling the hardware; verify voltage levels before connecting modules.
+
+<div align="center">
+    <img src="Diagrams/Wiring.png" alt="Wiring Diagram" style="max-width:100%;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+</div>
+
+> Note: The SIM800L requires a stable 4V-ish supply capable of delivering peak currents (~2A). Use a proper buck regulator and large decoupling capacitors near the module.
 
 ### 📡 **Module Integration**
 
@@ -524,7 +561,7 @@ Edit `APIConfig.h` to configure your web API:
 // Connection settings
 #define GPRS_RETRY_ATTEMPTS 3        // Connection retry attempts
 #define HTTP_RETRY_ATTEMPTS 3        // HTTP request retries
-#define CONNECTION_CHECK_INTERVAL 60000 // Connection health check
+#define CONNECTION_CHECK_INTERVAL 60000 // 1 minute
 
 // Enable/disable HTTP functionality
 #define HTTP_ENABLED true
@@ -1334,7 +1371,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ```
 MIT License
 
-Copyright (c) 2024 qppd
+Copyright (c) 2025 qppd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
