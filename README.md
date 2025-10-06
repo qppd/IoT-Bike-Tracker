@@ -144,6 +144,20 @@ All enclosure parts are in the `model/` folder. The cases are designed as stacka
                 <br />
                 <a href="model/Bike_Tracker_Case_2_Top.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2.gcode">GCODE</a>
             </td>
+            <td align="center">
+                <img src="model/Bike_Tracker_Case_2_Cover_Bottom.png" alt="Case 2 Cover Bottom" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <br />
+                <strong>Case 2 Cover — Bottom</strong>
+                <br />
+                <a href="model/Bike_Tracker_Case_2_Cover_Bottom.png">View PNG</a> · <a href="model/Bike_Tracker_Case_2_Cover.stl">STL</a>
+            </td>
+            <td align="center">
+                <img src="model/Bike_Tracker_Case_2_Cover_Top.png" alt="Case 2 Cover Top" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <br />
+                <strong>Case 2 Cover — Top</strong>
+                <br />
+                <a href="model/Bike_Tracker_Case_2_Cover_Top.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2_Cover.gcode">GCODE</a>
+            </td>
         </tr>
     </table>
 </div>
