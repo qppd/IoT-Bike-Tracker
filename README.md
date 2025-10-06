@@ -134,6 +134,62 @@ Below are the provided 3D model previews and links for the enclosure (top and bo
 
 > Printing notes: Use PETG or ABS for better weather resistance. Consider adding internal standoffs for the PCB and cable exits with grommets for water protection.
 
+### 🔗 Stacked Variant — Case 2 (Designed to stack with the Case 1)
+
+
+
+Combined preview and files
+<div align="center">
+    <table>
+        <tr>
+            <td align="center">
+                <img src="model/Bike_Tracker_Case_Top.png" alt="Original Case Top" style="max-width:260px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <br />
+                <strong>Original — Top</strong>
+                <br />
+                <a href="model/Bike_Tracker_Case_Top.png">View PNG</a> · <a href="model/Bike_Tracker_Case.stl">Download STL (original)</a>
+            </td>
+            <td align="center">
+                <img src="model/Bike_Tracker_Case_2_Bottom.png" alt="Case 2 Bottom (mating face)" style="max-width:260px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <br />
+                <strong>Case 2 — Bottom (mating face)</strong>
+                <br />
+                <a href="model/Bike_Tracker_Case_2_Bottom.png">View PNG</a> · <a href="model/Bike_Tracker_Case_2.stl">Download STL (case 2)</a>
+            </td>
+            <td align="center">
+                <img src="model/Bike_Tracker_Case_2_Top.png" alt="Case 2 Top" style="max-width:260px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <br />
+                <strong>Case 2 — Top</strong>
+                <br />
+                <a href="model/Bike_Tracker_Case_2_Top.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2.gcode">Download GCODE (case 2)</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+#### Assembly Guide: Stacking the Bike Tracker Case
+
+1. Print all required parts: original case top & bottom, Case 2 top & bottom. Clean off any support material.
+2. Install your electronics (NodeMCU, SIM800L, Neo6m, batteries) into the original case bottom. Secure the PCB and components.
+3. Place the original case top onto the bottom and loosely fasten screws. If you need to route wires upward, leave screws slightly loose.
+4. Stack Case 2 bottom on top of the original case top. Align the pegs and holes for a snug fit.
+5. Fasten the stacked cases together using M3 screws or clips. Make sure the joint is tight and secure.
+6. For weatherproofing, apply a thin bead of silicone or use a gasket between the mating faces.
+7. Route antennas or cables through the upper compartment as needed. Seal any cable exits with silicone or cable glands.
+
+#### Recommended Print Settings
+- Material: PETG or ABS for outdoor durability
+- Layer height: 0.2 mm
+- Walls: 2–3 perimeters (≥1.2 mm)
+- Infill: 20–40% depending on strength needs
+- Supports: Use for overhangs and internal features
+
+#### Quick Fit Checklist
+1. Check alignment and fit of all stacked parts before final assembly.
+2. Verify clearance for antennas, SIM slot, and cables.
+3. Confirm screw lengths do not interfere with electronics.
+4. Inspect gasket or seal for full coverage.
+
 ### 💾 **Software Architecture**
 - Object-oriented C++ design with separate classes
 - Modular GPS and GSM communication libraries
