@@ -121,7 +121,7 @@ All enclosure parts are in the `model/` folder. The cases are designed as stacka
                 <br />
                 <img src="model/Bike_Tracker_Case_Bottom.png" alt="Case 1 Bottom View" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
                 <br />
-                <strong>Case 1 — Top & Bottom Views (Same Part)</strong>
+                <strong>Case 1 — Top & Bottom Views</strong>
                 <br />
                 <a href="model/Bike_Tracker_Case_Top.png">Top View PNG</a> · <a href="model/Bike_Tracker_Case_Bottom.png">Bottom View PNG</a> · <a href="model/Bike_Tracker_Case.stl">STL</a> · <a href="model/CE3V3SE_Bike_Tracker_Case.gcode">GCODE</a>
             </td>
@@ -130,7 +130,7 @@ All enclosure parts are in the `model/` folder. The cases are designed as stacka
                 <br />
                 <img src="model/Bike_Tracker_Case_2_Bottom.png" alt="Case 2 Bottom View" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
                 <br />
-                <strong>Case 2 — Top & Bottom Views (Same Part)</strong>
+                <strong>Case 2 — Top & Bottom Views</strong>
                 <br />
                 <a href="model/Bike_Tracker_Case_2_Top.png">Top View PNG</a> · <a href="model/Bike_Tracker_Case_2_Bottom.png">Bottom View PNG</a> · <a href="model/Bike_Tracker_Case_2.stl">STL</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2.gcode">GCODE</a>
             </td>
@@ -139,7 +139,7 @@ All enclosure parts are in the `model/` folder. The cases are designed as stacka
                 <br />
                 <img src="model/Bike_Tracker_Case_2_Cover_Bottom.png" alt="Case 2 Cover (Bottom View)" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
                 <br />
-                <strong>Case 2 Cover — Top & Bottom Views (Same Part)</strong>
+                <strong>Case 2 Cover — Top & Bottom Views</strong>
                 <br />
                 <a href="model/Bike_Tracker_Case_2_Cover_Top.png">Top View PNG</a> · <a href="model/Bike_Tracker_Case_2_Cover_Bottom.png">Bottom View PNG</a> · <a href="model/Bike_Tracker_Case_2_Cover.stl">STL</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2_Cover.gcode">GCODE</a>
             </td>
