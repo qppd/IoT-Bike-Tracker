@@ -108,9 +108,10 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - Temperature-resistant component selection
 
 
-### 🧩 Bike Tracker Case Models (Stacked & Expandable)
 
-All enclosure parts are in the `model/` folder. You can use the original case alone, or stack Case 2 on top for extra space and expansion. Below are previews and download links for all parts:
+### 🧩 Bike Tracker Case Models (Stackable Modular Parts)
+
+All enclosure parts are in the `model/` folder. The cases are designed as stackable modular parts—each piece fits together to form the complete enclosure. You can use just the original case, or stack Case 2 parts on top for a multi-layer build. Below are previews and download links for all parts:
 
 <div align="center">
     <table>
@@ -147,7 +148,7 @@ All enclosure parts are in the `model/` folder. You can use the original case al
     </table>
 </div>
 
-> **Printing notes:** Use PETG or ABS for weather resistance. Add internal standoffs for the PCB and cable exits with grommets for water protection. All parts are designed to stack and expand the enclosure as needed.
+> **Printing notes:** Use PETG or ABS for weather resistance. Add internal standoffs for the PCB and cable exits with grommets for water protection. All parts are designed to stack as modular layers—combine only the parts you need for your build.
 
 #### Assembly Guide
 1. Print all required parts and clean off support material.
