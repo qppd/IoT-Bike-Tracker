@@ -107,72 +107,53 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - Secure bike mounting system with anti-theft features
 - Temperature-resistant component selection
 
-### 🧩 Bike Tracker Case Models
 
-Below are the provided 3D model previews and links for the enclosure (top and bottom). Files are included in the `model/` folder (STL + GCODE where available). These are sized for the internal components (NodeMCU, SIM800L, Neo6m and batteries) — verify fit with your components before printing.
+### 🧩 Bike Tracker Case Models (Stacked & Expandable)
+
+All enclosure parts are in the `model/` folder. You can use the original case alone, or stack Case 2 on top for extra space and expansion. Below are previews and download links for all parts:
 
 <div align="center">
     <table>
         <tr>
             <td align="center">
-                <img src="model/Bike_Tracker_Case_Top.png" alt="Bike Tracker Case Top" style="max-width:320px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <img src="model/Bike_Tracker_Case_Bottom.png" alt="Case 1 Bottom" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
                 <br />
-                <strong>Case Top</strong>
+                <strong>Case 1 — Bottom</strong>
                 <br />
-                <a href="model/Bike_Tracker_Case_Top.png">View PNG</a> · <a href="model/Bike_Tracker_Case.stl">Download STL</a>
+                <a href="model/Bike_Tracker_Case_Bottom.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case.gcode">GCODE</a>
             </td>
             <td align="center">
-                <img src="model/Bike_Tracker_Case_Bottom.png" alt="Bike Tracker Case Bottom" style="max-width:320px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <img src="model/Bike_Tracker_Case_Top.png" alt="Case 1 Top" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
                 <br />
-                <strong>Case Bottom</strong>
+                <strong>Case 1 — Top</strong>
                 <br />
-                <a href="model/Bike_Tracker_Case_Bottom.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case.gcode">Download GCODE</a>
-            </td>
-        </tr>
-    </table>
-</div>
-
-> Printing notes: Use PETG or ABS for better weather resistance. Consider adding internal standoffs for the PCB and cable exits with grommets for water protection.
-
-### 🔗 Stacked Variant — Case 2 (Designed to stack with the Case 1)
-
-
-
-Combined preview and files
-<div align="center">
-    <table>
-        <tr>
-            <td align="center">
-                <img src="model/Bike_Tracker_Case_Top.png" alt="Original Case Top" style="max-width:260px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
-                <br />
-                <strong>Original — Top</strong>
-                <br />
-                <a href="model/Bike_Tracker_Case_Top.png">View PNG</a> · <a href="model/Bike_Tracker_Case.stl">Download STL (original)</a>
+                <a href="model/Bike_Tracker_Case_Top.png">View PNG</a> · <a href="model/Bike_Tracker_Case.stl">STL</a>
             </td>
             <td align="center">
-                <img src="model/Bike_Tracker_Case_2_Bottom.png" alt="Case 2 Bottom (mating face)" style="max-width:260px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <img src="model/Bike_Tracker_Case_2_Bottom.png" alt="Case 2 Bottom" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
                 <br />
-                <strong>Case 2 — Bottom (mating face)</strong>
+                <strong>Case 2 — Bottom</strong>
                 <br />
-                <a href="model/Bike_Tracker_Case_2_Bottom.png">View PNG</a> · <a href="model/Bike_Tracker_Case_2.stl">Download STL (case 2)</a>
+                <a href="model/Bike_Tracker_Case_2_Bottom.png">View PNG</a> · <a href="model/Bike_Tracker_Case_2.stl">STL</a>
             </td>
             <td align="center">
-                <img src="model/Bike_Tracker_Case_2_Top.png" alt="Case 2 Top" style="max-width:260px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                <img src="model/Bike_Tracker_Case_2_Top.png" alt="Case 2 Top" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
                 <br />
                 <strong>Case 2 — Top</strong>
                 <br />
-                <a href="model/Bike_Tracker_Case_2_Top.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2.gcode">Download GCODE (case 2)</a>
+                <a href="model/Bike_Tracker_Case_2_Top.png">View PNG</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2.gcode">GCODE</a>
             </td>
         </tr>
     </table>
 </div>
 
-#### Assembly Guide: Stacking the Bike Tracker Case
+> **Printing notes:** Use PETG or ABS for weather resistance. Add internal standoffs for the PCB and cable exits with grommets for water protection. All parts are designed to stack and expand the enclosure as needed.
 
-1. Print all required parts: original case top & bottom, Case 2 top & bottom. Clean off any support material.
-2. Install your electronics (NodeMCU, SIM800L, Neo6m, batteries) into the original case bottom. Secure the PCB and components.
-3. Place the original case top onto the bottom and loosely fasten screws. If you need to route wires upward, leave screws slightly loose.
-4. Stack Case 2 bottom on top of the original case top. Align the pegs and holes for a snug fit.
+#### Assembly Guide
+1. Print all required parts and clean off support material.
+2. Install electronics (NodeMCU, SIM800L, Neo6m, batteries) into the Case 1 bottom. Secure the PCB and components.
+3. Place Case 1 top onto the bottom and loosely fasten screws. If routing wires upward, leave screws slightly loose.
+4. Stack Case 2 bottom on top of Case 1 top. Align pegs and holes for a snug fit.
 5. Fasten the stacked cases together using M3 screws or clips. Make sure the joint is tight and secure.
 6. For weatherproofing, apply a thin bead of silicone or use a gasket between the mating faces.
 7. Route antennas or cables through the upper compartment as needed. Seal any cable exits with silicone or cable glands.
