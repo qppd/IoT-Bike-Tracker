@@ -143,6 +143,15 @@ All enclosure parts are in the `model/` folder. The cases are designed as stacka
                 <br />
                 <a href="model/Bike_Tracker_Case_2_Cover_Top.png">Top View PNG</a> · <a href="model/Bike_Tracker_Case_2_Cover_Bottom.png">Bottom View PNG</a> · <a href="model/Bike_Tracker_Case_2_Cover.stl">STL</a> · <a href="model/CE3V3SE_Bike_Tracker_Case_2_Cover.gcode">GCODE</a>
             </td>
+                <td align="center" colspan="2">
+                    <img src="model/Bike_Tracker_Clamp_Case_2_Cover_Support_Top_View.png" alt="Clamp Case 2 Cover Support (Top View)" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                    <br />
+                    <img src="model/Bike_Tracker_Clamp_Case_2_Cover_Support_Bottom_View.png" alt="Clamp Case 2 Cover Support (Bottom View)" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                    <br />
+                    <strong>Clamp Case 2 Cover Support — Top & Bottom Views</strong>
+                    <br />
+                    <a href="model/Bike_Tracker_Clamp_Case_2_Cover_Support_Top_View.png">Top View PNG</a> · <a href="model/Bike_Tracker_Clamp_Case_2_Cover_Support_Bottom_View.png">Bottom View PNG</a> · <a href="model/Bike_Tracker_Clamp_Case_2_Cover_Support.stl">STL</a> · <a href="model/CE3V3SE_Bike_Tracker_Clamp_Case_2_Cover_Support.gcode">GCODE</a>
+                </td>
         </tr>
     </table>
 </div>
