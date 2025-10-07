@@ -161,6 +161,15 @@ All enclosure parts are in the `model/` folder. The cases are designed as stacka
                         <br />
                         <a href="model/Bike_Tracker_Clamp_Top_View.png">Top View PNG</a> · <a href="model/Bike_Tracker_Clamp_Bottom_View.png">Bottom View PNG</a> · <a href="model/Bike_Tracker_Clamp.stl">STL</a> · <a href="model/CE3V3SE_Bike_Tracker_Clamp.gcode">GCODE</a>
                     </td>
+                        <td align="center" colspan="2">
+                            <img src="model/Bike_Tracker_Case_Cover_Solar_Mount_Top_View.png" alt="Case Cover Solar Mount (Top View)" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                            <br />
+                            <img src="model/Bike_Tracker_Case_Cover_Solar_Mount_Bottom_View.png" alt="Case Cover Solar Mount (Bottom View)" style="max-width:220px;height:auto;border:1px solid #ddd;padding:6px;background:#fff" />
+                            <br />
+                            <strong>Case Cover Solar Mount — Top & Bottom Views</strong>
+                            <br />
+                            <a href="model/Bike_Tracker_Case_Cover_Solar_Mount_Top_View.png">Top View PNG</a> · <a href="model/Bike_Tracker_Case_Cover_Solar_Mount_Bottom_View.png">Bottom View PNG</a> · <a href="model/Bike_Tracker_Case_Cover_Solar_Mount.stl">STL</a>
+                        </td>
         </tr>
     </table>
 </div>
