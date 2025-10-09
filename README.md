@@ -18,43 +18,43 @@
 
 ## 📋 Table of Contents
 
-- [🌟 Overview](#-overview)
-- [✨ Features](#-features)
-- [🔧 Hardware Requirements](#-hardware-requirements)
-- [💻 Software Requirements](#-software-requirements)
-- [🚀 Quick Start](#-quick-start)
-- [⚡ Hardware Assembly](#-hardware-assembly)
-- [📡 Pin Configuration](#-pin-configuration)
-- [🛠️ Software Installation](#️-software-installation)
-- [📖 API Documentation](#-api-documentation)
-- [📡 SIM800L Internet Setup Guide](#-sim800l-internet-setup-guide)
-- [🌐 Web API Integration Guide](#-web-api-integration-guide)
-- [🎯 Usage Examples](#-usage-examples)
-- [🔍 Troubleshooting](#-troubleshooting)
-- [📋 Changelog](#-changelog)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-- [🙏 Acknowledgments](#-acknowledgments)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Hardware Requirements](#-hardware-requirements)
+- [Software Requirements](#-software-requirements)
+- [Quick Start](#-quick-start)
+- [Hardware Assembly](#-hardware-assembly)
+- [Pin Configuration](#-pin-configuration)
+- [Software Installation](#️-software-installation)
+- [API Documentation](#-api-documentation)
+- [SIM800L Internet Setup Guide](#-sim800l-internet-setup-guide)
+- [Web API Integration Guide](#-web-api-integration-guide)
+- [Usage Examples](#-usage-examples)
+- [Troubleshooting](#-troubleshooting)
+- [Changelog](#-changelog)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
 
 ---
 
-## 🌟 Overview
+## Overview
 
 The **IoT Bike Tracker** is a comprehensive solution for bicycle security and monitoring, featuring real-time GPS tracking, GSM communication, and sustainable solar power. Built with the ESP8266-based NodeMCU v3.1.0, this project combines robust hardware design with efficient software architecture for reliable outdoor operation.
 
-### 🎯 Key Highlights
+### Key Highlights
 
-- 🛰️ **Real-time GPS Tracking** with Neo6m module (fully implemented)
-- 📱 **GSM Communication** via SIM800L for remote monitoring (fully implemented) 
-- 🌐 **HTTP API Integration** with web services over GPRS (fully implemented)
-- ☀️ **Solar-powered** with dual 18650 battery backup (hardware design)
-- � **Modular Code Architecture** for easy customization (fully implemented)
-- 🏠 **Weather-resistant** 3D-printed enclosure (design provided)
-- � **Secure Bike Mounting** with custom clamp design (design provided)
+-  **Real-time GPS Tracking** with Neo6m module (fully implemented)
+-  **GSM Communication** via SIM800L for remote monitoring (fully implemented) 
+-  **HTTP API Integration** with web services over GPRS (fully implemented)
+-  **Solar-powered** with dual 18650 battery backup (hardware design)
+-  **Modular Code Architecture** for easy customization (fully implemented)
+-  **Weather-resistant** 3D-printed enclosure (design provided)
+-  **Secure Bike Mounting** with custom clamp design (design provided)
 
-### 📊 **Implementation Status**
+### **Implementation Status**
 
-#### ✅ **Core Features (Ready to Use)**
+#### **Core Features (Ready to Use)**
 - GPS tracking with NMEA parsing
 - SMS notifications and HTTP API
 - Motion detection (GPS-based)
@@ -66,25 +66,25 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - **Comprehensive power sleep modes**
 - **Low power management system**
 
-#### ⭐ **Optional Hardware Enhancements**
+####  **Optional Hardware Enhancements**
 - LED status indication (requires LED on D8)
 - Audio alerts (requires buzzer on D7)
 
-#### 🚧 **Future Enhancements**
+####  **Future Enhancements**
 - OTA updates
 - Mobile app integration
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🛰️ **GPS Tracking System**
+###  **GPS Tracking System**
 - High-precision location tracking with Neo6m GPS module
 - Real-time coordinate acquisition and processing
 - Configurable update intervals for battery optimization
 - NMEA data parsing and validation
 
-### 📡 **GSM Communication**
+###  **GSM Communication**
 - SMS-based location reporting via SIM800L module
 - **HTTP POST requests** to web APIs over GPRS
 - Real-time data transmission to cloud services
@@ -92,7 +92,7 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - Network status monitoring and error handling
 - Configurable message intervals (default: 30 minutes)
 
-### ⚡ **Power Management**
+###  **Power Management**
 - Dual solar panel charging system
 - 2S BMS protection for 18650 lithium batteries
 - Buck converter voltage regulation
@@ -101,7 +101,7 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 - **Deep sleep for extended battery life**
 - Configurable update intervals for power optimization
 
-### 🏗️ **Hardware Design**
+###  **Hardware Design**
 - Robust PCB layout optimized for outdoor use
 - Water-resistant (IP54) 3D-printed enclosure
 - Secure bike mounting system with anti-theft features
@@ -109,7 +109,7 @@ The **IoT Bike Tracker** is a comprehensive solution for bicycle security and mo
 
 
 
-### 🧩 Bike Tracker Case Models (Stackable Modular Parts)
+###  Bike Tracker Case Models (Stackable Modular Parts)
 
 All enclosure parts are in the `model/` folder. The cases are designed as stackable modular parts—each piece fits together to form the complete enclosure. You can use just the original case, or stack Case 2 parts on top for a multi-layer build. Below are previews and download links for all parts:
 
@@ -207,7 +207,7 @@ All enclosure parts are in the `model/` folder. The cases are designed as stacka
 3. Confirm screw lengths do not interfere with electronics.
 4. Inspect gasket or seal for full coverage.
 
-### 💾 **Software Architecture**
+###  **Software Architecture**
 - Object-oriented C++ design with separate classes
 - Modular GPS and GSM communication libraries
 - Comprehensive error handling and recovery
@@ -231,11 +231,11 @@ Source/BikeTracker/
 
 #### **Enhanced System Features**
 
-**🔄 Dual Mode Operation:**
+** Dual Mode Operation:**
 - **Testing Mode**: Debug output, serial commands, accelerated timing, test SMS
 - **Production Mode**: Minimal logging, normal timing, real emergency contacts
 
-**🧠 Advanced Core Logic:**
+** Advanced Core Logic:**
 - Motion detection algorithms with GPS-based tracking
 - Speed monitoring with configurable limits
 - Geofencing with breach detection
@@ -246,14 +246,14 @@ Source/BikeTracker/
 - **Automatic web API data transmission**
 - **Real-time location updates to HTTP endpoints**
 
-**📡 Enhanced GPS Features:**
+** Enhanced GPS Features:**
 - Full NMEA sentence parsing (GGA and RMC)
 - Real-time location data extraction
 - Speed calculation and monitoring
 - GPS fix status detection
 - Coordinate conversion (DMS to Decimal)
 
-**📱 Advanced GSM Capabilities:**
+** Advanced GSM Capabilities:**
 - Network status monitoring and signal strength checking
 - Reliable SMS transmission with error handling
 - AT command processing with timeout handling
@@ -263,7 +263,7 @@ Source/BikeTracker/
 - **Automatic reconnection with exponential backoff**
 - **Connection health monitoring**
 
-**🎛️ Testing Mode Commands:**
+** Testing Mode Commands:**
 - `ARM/DISARM` - Security control
 - `STATUS` - Detailed system status
 - `DIAG` - Hardware diagnostics
@@ -282,55 +282,55 @@ Source/BikeTracker/
 
 ---
 
-## 🔧 Hardware Requirements
+##  Hardware Requirements
 
-### 📦 **Bill of Materials (BOM)**
+###  **Bill of Materials (BOM)**
 
 | Component | Quantity | Specification | Purpose |
 |-----------|----------|---------------|---------|
-| 🌞 **Mini Solar Panel** | 2x | 5V 1W Polycrystalline | Primary power source |
-| 🔋 **18650 Lithium Battery** | 2x | 3.7V 3000mAh Protected | Energy storage |
-| ⚡ **2S BMS Module** | 1x | 7.4V 8A Protection | Battery management |
-| 🔌 **Buck Converter** | 2x | DC-DC Step Down 3.3V/5V | Voltage regulation |
-| 🧠 **NodeMCU v3.1.0** | 1x | ESP8266 Development Board | Main microcontroller |
-| 🛰️ **Neo6m GPS Module** | 1x | UART GPS Receiver | Location tracking |
-| 📱 **SIM800L GSM Module** | 1x | Quad-band GSM/GPRS | Communication |
-| 🏠 **3D Printed Case** | 1x | Water-resistant ABS/PETG | Protection enclosure |
-| 🔧 **Bike Mounting Clamp** | 1x | Adjustable Security Clamp | Secure attachment |
+|  **Mini Solar Panel** | 2x | 5V 1W Polycrystalline | Primary power source |
+|  **18650 Lithium Battery** | 2x | 3.7V 3000mAh Protected | Energy storage |
+|  **2S BMS Module** | 1x | 7.4V 8A Protection | Battery management |
+|  **Buck Converter** | 2x | DC-DC Step Down 3.3V/5V | Voltage regulation |
+|  **NodeMCU v3.1.0** | 1x | ESP8266 Development Board | Main microcontroller |
+|  **Neo6m GPS Module** | 1x | UART GPS Receiver | Location tracking |
+|  **SIM800L GSM Module** | 1x | Quad-band GSM/GPRS | Communication |
+|  **3D Printed Case** | 1x | Water-resistant ABS/PETG | Protection enclosure |
+|  **Bike Mounting Clamp** | 1x | Adjustable Security Clamp | Secure attachment |
 
-### 🔌 **Power Specifications**
+###  **Power Specifications**
 - **Input Voltage**: 5V (Solar) / 7.4V (Battery)
 - **Operating Voltage**: 3.3V (MCU) / 5V (Modules)
 - **Power Consumption**: ~200mA (Active) / ~50μA (Sleep)
 - **Battery Life**: 7-14 days (weather dependent)
 
-### ⚡ **Feature Compatibility**
+###  **Feature Compatibility**
 
-#### ✅ **Basic Hardware (GPS + GSM + MCU)**
-- 🛰️ Real-time GPS tracking
-- 📱 SMS notifications and HTTP API
-- 🚶 Motion detection (GPS-based)
-- 🏎️ Speed monitoring and alerts
-- 🗺️ Geofencing with breach detection
-- 📊 System status monitoring
-- 💤 Comprehensive power sleep modes
+####  **Basic Hardware (GPS + GSM + MCU)**
+-  Real-time GPS tracking
+-  SMS notifications and HTTP API
+-  Motion detection (GPS-based)
+-  Speed monitoring and alerts
+-  Geofencing with breach detection
+-  System status monitoring
+-  Comprehensive power sleep modes
 
-#### ⭐ **Optional Hardware Enhancements**
-- 🔊 **Audio Alerts** - Buzzer pin defined and function implemented (D7)
-- 💡 **Status LEDs** - LED pin defined and function implemented (D8)
+####  **Optional Hardware Enhancements**
+-  **Audio Alerts** - Buzzer pin defined and function implemented (D7)
+-  **Status LEDs** - LED pin defined and function implemented (D8)
 
 **Note**: The current implementation focuses on GPS+GSM functionality with comprehensive power management. LED and buzzer functionality is implemented but requires physical components.
 
 ---
 
-## 💻 Software Requirements
+##  Software Requirements
 
-### 🛠️ **Development Environment**
+###  **Development Environment**
 - **Arduino IDE** 1.8.19 or later
 - **ESP8266 Board Package** 3.0.0 or later
 - **USB to Serial Driver** (CP2102/CH340)
 
-### 📚 **Required Libraries**
+###  **Required Libraries**
 
 ```cpp
 // Core Libraries (Built-in)
@@ -342,7 +342,7 @@ Source/BikeTracker/
 #include "Sim800L.h"      // GSM module handler
 ```
 
-### 📋 **Library Installation**
+###  **Library Installation**
 ```bash
 # Install ESP8266 Board Package
 # File → Preferences → Additional Board Manager URLs:
@@ -351,35 +351,35 @@ Source/BikeTracker/
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
-### 1️⃣ **Clone Repository**
+###  **Clone Repository**
 ```bash
 git clone https://github.com/qppd/IoT-Bike-Tracker.git
 cd IoT-Bike-Tracker/Source/BikeTracker
 ```
 
-### 2️⃣ **Hardware Setup**
+###  **Hardware Setup**
 - Assemble components according to wiring diagram
 - Connect solar panels and battery system
 - Mount GPS and GSM antennas appropriately
 
-### 3️⃣ **Software Upload**
+###  **Software Upload**
 - Open `BikeTracker.ino` in Arduino IDE
 - Select **NodeMCU 1.0 (ESP-12E Module)** board
 - Choose appropriate COM port
 - Upload code to device
 
-### 4️⃣ **Initial Configuration**
+###  **Initial Configuration**
 - Insert activated SIM card into SIM800L module
 - Power on the system and monitor serial output
 - Test GPS acquisition and GSM connectivity
 
 ---
 
-## ⚡ Hardware Assembly
+##  Hardware Assembly
 
-### 🔌 **Power System Connection**
+###  **Power System Connection**
 
 ```
 Solar Panels → Buck Converter → 2S BMS → 18650 Batteries
@@ -388,7 +388,7 @@ Solar Panels → Buck Converter → 2S BMS → 18650 Batteries
                    Voltage      Storage     Backup
 ```
 
-### 🖼️ Wiring Diagram
+###  Wiring Diagram
 
 The wiring diagram below shows the recommended connections between the NodeMCU (ESP8266), Neo6m GPS, SIM800L, power system (buck converters and 2S BMS) and optional buzzer / status LED. Use the diagram as a reference when assembling the hardware; verify voltage levels before connecting modules.
 
@@ -417,9 +417,9 @@ The wiring diagram below shows the recommended connections between the NodeMCU (
 
 ---
 
-## 📡 Pin Configuration
+##  Pin Configuration
 
-### 🎛️ **NodeMCU v3.1.0 Pin Mapping**
+###  **NodeMCU v3.1.0 Pin Mapping**
 
 | Module | Function | NodeMCU Pin | GPIO | Notes |
 |--------|----------|-------------|------|-------|
@@ -432,16 +432,16 @@ The wiring diagram below shows the recommended connections between the NodeMCU (
 | **Power** | VIN | VIN | - | 5V Input |
 | **Debug** | USB | USB | - | Serial Monitor |
 
-### ⚠️ **Important Notes**
+###  **Important Notes**
 - Avoid using GPIO0, GPIO2, GPIO15 during boot
 - Ensure proper pull-up/pull-down resistors where needed
 - Use level shifters if voltage mismatch occurs
 
 ---
 
-## 🛠️ Software Installation
+##  Software Installation
 
-### 📥 **Step-by-Step Installation**
+###  **Step-by-Step Installation**
 
 1. **Prepare Development Environment**
    ```bash
@@ -466,7 +466,7 @@ The wiring diagram below shows the recommended connections between the NodeMCU (
    // Monitor serial output
    ```
 
-### 🔧 **Configuration Options**
+###  **Configuration Options**
 
 The system uses modular configuration files for easy customization:
 
@@ -511,9 +511,9 @@ The system uses modular configuration files for easy customization:
 
 ---
 
-## 📖 API Documentation
+##  API Documentation
 
-### 📍 **Neo6mGPS Class**
+###  **Neo6mGPS Class**
 
 #### **Constructor**
 ```cpp
@@ -553,7 +553,7 @@ void loop() {
 }
 ```
 
-### 📱 **Sim800L Class**
+###  **Sim800L Class**
 
 #### **Constructor**
 ```cpp
@@ -601,7 +601,7 @@ void sendLocation() {
 }
 ```
 
-### 🌐 **HTTP API Integration**
+###  **HTTP API Integration**
 
 The bike tracker now supports sending location data to web APIs via HTTP POST requests over GPRS with comprehensive internet connectivity features.
 
@@ -724,13 +724,13 @@ In testing mode, use these serial commands:
 
 ---
 
-## 📡 SIM800L Internet Setup Guide
+##  SIM800L Internet Setup Guide
 
-### 🌐 **Internet Connectivity Overview**
+###  **Internet Connectivity Overview**
 
 This section provides comprehensive instructions for setting up robust internet connectivity on your IoT Bike Tracker using the SIM800L GSM/GPRS module with enhanced features including automatic reconnection, connection monitoring, and extensive error handling.
 
-### 📋 **SIM Card Setup Requirements**
+###  **SIM Card Setup Requirements**
 
 #### **1. SIM Card Requirements**
 - **Data Plan**: Ensure your SIM card has an active data plan
@@ -744,7 +744,7 @@ Before installation, test your SIM card in a phone to verify:
 - Data connectivity is functional
 - APN settings are correct
 
-### ⚙️ **Advanced Configuration Options**
+###  **Advanced Configuration Options**
 
 #### **Carrier-Specific APN Settings**
 ```cpp
@@ -774,7 +774,7 @@ Before installation, test your SIM card in a phone to verify:
 #define CONNECTION_CHECK_INTERVAL 60000 // Connection health check (1 minute)
 ```
 
-### 🚀 **Enhanced Features**
+###  **Enhanced Features**
 
 #### **1. Automatic Reconnection**
 - Automatically detects lost GPRS connections
@@ -822,7 +822,7 @@ HTTP POST result: SUCCESS
 === Test Complete ===
 ```
 
-### 🔧 **Troubleshooting Common Issues**
+###  **Troubleshooting Common Issues**
 
 #### **Issue: "GSM Network: No network connection"**
 **Solutions:**
@@ -852,7 +852,7 @@ HTTP POST result: SUCCESS
 - Ensure JSON format is accepted by your API
 - Test API with external tools (Postman, curl)
 
-### ⚡ **Power Management for SIM800L**
+###  **Power Management for SIM800L**
 
 #### **Critical Power Requirements**
 - **Stable Voltage**: 3.7V - 4.2V (4V recommended)
@@ -865,7 +865,7 @@ HTTP POST result: SUCCESS
 - Voltage fluctuations cause module resets
 - Poor power supply affects signal quality
 
-### 🔐 **Security Considerations**
+###  **Security Considerations**
 
 #### **SIM Card Security**
 - Use SIM cards with secure profiles
@@ -882,7 +882,7 @@ HTTP POST result: SUCCESS
 - Implement rate limiting on API endpoints
 - Use device certificates for enhanced security
 
-### 📊 **Performance Optimization**
+###  **Performance Optimization**
 
 #### **Connection Optimization**
 - Maintain persistent GPRS connections
@@ -899,7 +899,7 @@ HTTP POST result: SUCCESS
 - **Optimize power consumption with comprehensive sleep modes**
 - Optimize update frequencies (implemented via configurable intervals)
 
-### ✅ **Troubleshooting Checklist**
+###  **Troubleshooting Checklist**
 
 1. **Hardware Check**
    - [ ] Antenna properly connected
@@ -933,9 +933,9 @@ HTTP POST result: SUCCESS
 
 ---
 
-## � Web API Integration Guide
+##  Web API Integration Guide
 
-### 📡 **API Endpoint Specification**
+###  **API Endpoint Specification**
 
 #### **HTTP POST Request**
 - **Endpoint**: Your API URL (configured in `APIConfig.h`)
@@ -943,7 +943,7 @@ HTTP POST result: SUCCESS
 - **Content-Type**: `application/json`
 - **Expected Response**: HTTP 200-299 for success
 
-### 📋 **Field Descriptions**
+###  **Field Descriptions**
 
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
@@ -954,7 +954,7 @@ HTTP POST result: SUCCESS
 | `alertType` | String | Type of alert (optional, empty for regular updates) | "MOTION_DETECTED" |
 | `signalStrength` | Number | GSM signal strength (0-31, or -1 if unknown) | 25 |
 
-### 💻 **Sample API Implementations**
+###  **Sample API Implementations**
 
 #### **Node.js/Express Example**
 
@@ -1127,7 +1127,7 @@ try {
 ?>
 ```
 
-### 🗄️ **Database Schema Examples**
+###  **Database Schema Examples**
 
 #### **MySQL/PostgreSQL Schema**
 
@@ -1166,7 +1166,7 @@ db.bike_locations.createIndex({ "deviceId": 1, "timestamp": -1 });
 db.bike_locations.createIndex({ "alertType": 1 });
 ```
 
-### 🧪 **Testing Your API**
+###  **Testing Your API**
 
 You can test your API endpoint using curl:
 
@@ -1192,7 +1192,7 @@ Expected response:
 }
 ```
 
-### 📍 **Basic GPS Tracking**
+###  **Basic GPS Tracking**
 ```cpp
 void trackLocation() {
     if (gps.available()) {
@@ -1206,7 +1206,7 @@ void trackLocation() {
 }
 ```
 
-### 📱 **SMS Notifications**
+###  **SMS Notifications**
 ```cpp
 void sendAlert(String alertType) {
     String message = "BIKE ALERT: " + alertType + 
@@ -1215,7 +1215,7 @@ void sendAlert(String alertType) {
 }
 ```
 
-### ⚡ **Power Management**
+###  **Power Management**
 ```cpp
 // Comprehensive sleep mode implementation
 void enterSleepMode(unsigned long durationMs = 300000) {
@@ -1236,11 +1236,11 @@ void enableLowPowerMode(bool enabled = true) {
 
 ---
 
-## 🔍 Troubleshooting
+##  Troubleshooting
 
-### ✅ **What's Fully Implemented and Working**
+###  **What's Fully Implemented and Working**
 
-#### **GPS + GSM Core Features** ✅
+#### **GPS + GSM Core Features** 
 - Real-time GPS tracking with NMEA parsing
 - SMS notifications for alerts and status
 - HTTP API data transmission over GPRS
@@ -1252,31 +1252,31 @@ void enableLowPowerMode(bool enabled = true) {
 - Network connectivity monitoring
 - Automatic GPRS reconnection
 
-#### **Hardware Features** ✅
+#### **Hardware Features** 
 - LED status indication (requires LED on D8)
 - Buzzer alerts (requires buzzer on D7) 
 - Pin configurations defined and implemented
 - Modular code architecture
 
-### ✅ **Comprehensive Power Management System**
+###  **Comprehensive Power Management System**
 
 Our streamlined GPS and GSM tracking system includes robust power management capabilities:
 
-#### **Sleep Mode Features** ✅
+#### **Sleep Mode Features** 
 - **Light Sleep**: Maintains connections while reducing power consumption
 - **Deep Sleep**: Maximum power savings using ESP8266 deep sleep functionality  
 - **Low Power Mode**: Automatic sleep when inactive with configurable timeouts
 - **Activity Tracking**: Monitors system activity to optimize sleep scheduling
 - **Wake Conditions**: GPS updates, GSM messages, and timer-based wake events
 
-#### **Power Management Testing** ✅
+#### **Power Management Testing** 
 Available commands in testing mode:
 - `SLEEP` - Enter light sleep mode (5 minutes default)
 - `DEEPSLEEP` - Enter deep sleep mode (30 minutes default)
 - `LOWPOWER` - Enable automatic low power mode
 - `WAKE` - Wake from sleep modes and resume normal operation
 
-### ❓ **Common Issues**
+###  **Common Issues**
 
 | Problem | Symptoms | Solution |
 |---------|----------|----------|
@@ -1285,7 +1285,7 @@ Available commands in testing mode:
 | **Power Issues** | Frequent resets | • Check battery voltage<br>• Verify solar panel output<br>• Inspect wiring connections |
 | **Upload Failed** | Code won't upload | • Check COM port selection<br>• Try different USB cable<br>• Reset NodeMCU manually |
 
-### 🐛 **Debug Commands**
+###  **Debug Commands**
 
 ```cpp
 // Enable verbose debugging
@@ -1307,9 +1307,9 @@ Serial.println("Last Activity: " + String(millis() - status.lastActivity) + "ms 
 
 ## 📋 Changelog
 
-### 🔖 **Version 1.0.0** (Current) - **Streamlined Implementation**
+###  **Version 1.0.0** (Current) - **Streamlined Implementation**
 
-#### ⭐ **Core Features Implemented**
+####  **Core Features Implemented**
 - ✅ **HTTP API Integration** - Full GPRS connectivity with web API support
 - ✅ **Dual Mode Operation** - Testing/Development and Production modes
 - ✅ **Enhanced GPS Module** - Complete NMEA parsing and location processing
@@ -1319,13 +1319,13 @@ Serial.println("Last Activity: " + String(millis() - status.lastActivity) + "ms 
 - ✅ **Activity Tracking** - Automatic sleep optimization and wake condition monitoring
 - ✅ **Modular Architecture** - Clean separation of concerns and components
 
-#### 🔧 **Architectural Improvements**
+####  **Architectural Improvements**
 - ❌ **Removed Battery Monitoring** - Eliminated sensor-dependent features for better reliability
 - ❌ **Removed Theft Detection** - Streamlined focus on GPS+GSM core functionality
 - ✅ **Enhanced Power System** - Comprehensive sleep modes with ESP8266 built-in capabilities
 - ✅ **Simplified Configuration** - Reduced complexity by removing external sensor dependencies
 
-#### 🌐 **HTTP API Features**
+####  **HTTP API Features**
 - ✅ **GPRS Connectivity**: Full HTTP POST support over GPRS connection
 - ✅ **JSON Data Format**: Structured location and alert data transmission
 - ✅ **Web API Communication**: Real-time data push to cloud services
@@ -1335,14 +1335,14 @@ Serial.println("Last Activity: " + String(millis() - status.lastActivity) + "ms 
 - ✅ **Connection Health Monitoring**: Automatic reconnection and health checks
 - ✅ **Enhanced Error Handling**: Robust error recovery and retry mechanisms
 
-#### 🔧 **System Architecture**
+####  **System Architecture**
 - ✅ **Complete File Structure**: All modules implemented with proper organization
 - ✅ **Configuration Management**: Centralized configuration files for all settings
 - ✅ **Testing Framework**: Comprehensive testing mode with serial commands
 - ✅ **Production Ready**: Optimized production mode for deployment
 - ✅ **Documentation**: Complete API documentation and setup guides
 
-#### 🛡️ **Security & Reliability Features**
+####  **Security & Reliability Features**
 - ✅ Motion detection when armed (GPS-based)
 - ✅ Speed limit monitoring with configurable thresholds
 - ✅ Geofence boundary detection and breach alerts
@@ -1353,7 +1353,7 @@ Serial.println("Last Activity: " + String(millis() - status.lastActivity) + "ms 
 - ✅ Network connectivity monitoring and recovery
 - ✅ Activity tracking and automatic sleep optimization
 
-#### 📱 **Communication Features**
+####  **Communication Features**
 - ✅ SMS notification system for emergency alerts
 - ✅ HTTP API data transmission for real-time monitoring
 - ✅ Multiple carrier APN support (US, European, Asian carriers)
@@ -1369,75 +1369,59 @@ Serial.println("Last Activity: " + String(millis() - status.lastActivity) + "ms 
 - ✅ **Wake condition management**: GPS updates, GSM messages, and timer-based wake events
 - ✅ Hardware component power control
 
-### 🔮 **Future Enhancements** (v1.1.0)
-- 🚧 Web dashboard for real-time monitoring
-- 🚧 Mobile app integration for remote control  
-- 🚧 Advanced geofencing with custom boundary shapes
-- 🚧 Historical route tracking and analytics
-- 🚧 Battery voltage monitoring (requires external voltage sensor)
-- 🚧 Motion-based theft detection (requires accelerometer/gyroscope)
-- 🚧 OTA (Over-The-Air) update capability
-- 🚧 Enhanced security features with encryption
-- 🚧 SMS command processing for remote control
-- 🚧 Historical data analysis and reporting
-- 🚧 Multiple device management dashboard
-
-### 📈 **Development Timeline**
+###  **Development Timeline**
 - **Phase 1**: Basic GPS tracking and SMS notifications ✅
 - **Phase 2**: HTTP API integration and GPRS connectivity ✅
 - **Phase 3**: Enhanced error handling and recovery mechanisms ✅
 - **Phase 4**: Dual mode operation and comprehensive testing ✅
 - **Phase 5**: Complete documentation and setup guides ✅
-- **Phase 6**: Web dashboard and mobile app (Planned)
-- **Phase 7**: Advanced features and optimizations (Planned)
-
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions from the community! Here's how you can help:
 
-### 🎯 **How to Contribute**
+###  **How to Contribute**
 
-1. **🍴 Fork the Repository**
+1. ** Fork the Repository**
    ```bash
    git fork https://github.com/qppd/IoT-Bike-Tracker.git
    ```
 
-2. **🌿 Create Feature Branch**
+2. ** Create Feature Branch**
    ```bash
    git checkout -b feature/amazing-feature
    ```
 
-3. **💾 Commit Changes**
+3. ** Commit Changes**
    ```bash
    git commit -m "Add amazing feature"
    ```
 
-4. **📤 Push to Branch**
+4. ** Push to Branch**
    ```bash
    git push origin feature/amazing-feature
    ```
 
-5. **🔄 Open Pull Request**
+5. ** Open Pull Request**
    - Describe your changes clearly
    - Include testing information
    - Reference any related issues
 
-### 📝 **Contribution Guidelines**
+###  **Contribution Guidelines**
 
 - **Code Style**: Follow Arduino/C++ conventions
 - **Documentation**: Update README and comments
 - **Testing**: Verify functionality before submission
 - **Issues**: Use templates for bug reports and features
 
-### 🏆 **Contributors**
+###  **Contributors**
 
 Thanks to all contributors who have helped improve this project!
 
 ---
 
-## 📄 License
+##  License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
@@ -1459,21 +1443,21 @@ copies or substantial portions of the Software.
 
 ---
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
-### 🎖️ **Special Thanks**
+###  **Special Thanks**
 - **ESP8266 Community** for excellent documentation and support
 - **Arduino Foundation** for the development platform
 - **Open Source Hardware** movement for inspiration
 - **Contributors** who have helped improve this project
 
-### 📚 **Resources & References**
+###  **Resources & References**
 - [ESP8266 Arduino Core Documentation](https://arduino-esp8266.readthedocs.io/)
 - [Neo6m GPS Module Datasheet](https://www.u-blox.com/en/docs)
 - [SIM800L GSM Module Documentation](https://simcom.ee/documents/)
 - [3D Printing Guidelines](https://www.thingiverse.com/)
 
-### 🛠️ **Development Tools**
+###  **Development Tools**
 - **Arduino IDE** - Primary development environment
 - **Fritzing** - Circuit design and documentation
 - **Fusion 360** - 3D modeling and case design
